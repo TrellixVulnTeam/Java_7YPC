@@ -1,5 +1,8 @@
 import javax.swing.plaf.IconUIResource;
 import java.util.*;
+import Task4.*;
+import Task5.*;
+import Task6.*;
 
 public class Program {
     public static void main(String [] args){
@@ -34,8 +37,27 @@ public class Program {
 //        System.out.println(car.toString());
 //        System.out.println(book.toString());
 
-        Person p = new Admin("root", 5, "123" , "Anton", "123");
-        System.out.println(p);
+        //Person p = new Admin("root", 5, "123" , "Anton", "123");
+        //System.out.println(p);
+
+//        Device k = new Kettle("k", "l", "m");
+//        k.Show();
+//
+//        Device m = new Microwave("5", "5", "5");
+//        m.Show();
+
+
+//        MusicalInstrument m = new Cello();
+//        m.Show();
+
+//        Array a = new Array();
+//        System.out.println(a.Max());
+//        System.out.println(a.Min());
+//        System.out.println(a.Avg());
+//
+//        a.SortAsc();
+//        System.out.print("\n");
+//        a.SortDesc();
 
     }
 
