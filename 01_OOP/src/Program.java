@@ -26,13 +26,16 @@ public class Program {
 //        System.out.println(name);
 
 
-        Task11();
+        //Task11();
 
 //        Book book = new Book("Azbooka", "I am", 2021, "I am", "All", 0);
 //        Car car = new Car("Tesla", "Tesla", 2021, 0.2f);
 //
 //        System.out.println(car.toString());
 //        System.out.println(book.toString());
+
+        Person p = new Admin("root", 5, "123" , "Anton", "123");
+        System.out.println(p);
 
     }
 
