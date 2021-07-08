@@ -21,7 +21,7 @@ public class Main {
             //CreateAuthor(session);
             //FillAuthorAndBooks(session);
             //CreateUserAndRole(session);
-            TestUserService();
+            //TestUserService();
 
             session.close();
         }
@@ -130,38 +130,46 @@ public class Main {
     }
 
     public static void TestUserService(){
+
+        Scanner in = new Scanner(System.in);
+
         UserService us = new UserService();
 
         User user = new User("Lois");
         us.AddUser(user);
 
-        User getUser = us.GetUserById(user.getId());
-        System.out.println("Get USER -> " + getUser.getName());
+        boolean bool = true;
+        while (bool){
+            System.out.println(" 1. Show all\n 2. Show by id\n 3. Delete\n 4. Add new\n 5. Edit\n 0. Exit");
+            int choice = in.nextInt();
 
-        user.setName("Marcus");
-        us.EditUser(user);
-
-        getUser = us.GetUserById(user.getId());
-        System.out.println("Edit USER -> " + getUser.getName());
-
-
-        List<User> users = us.GetAll();
-        for(User u : users){
-            System.out.println(u.getId() + ": " + u.getName());
+            switch (choice){
+                case 1:
+                    List<User> users = us.GetAll();
+                    for(User u : users){
+                        System.out.println(u.getId() + ": " + u.getName());
+                    }
+                    break;
+                case 2:
+                    User getUser = us.GetUserById(user.getId());
+                    System.out.println("Get USER -> " + getUser.getName());
+                    break;
+                case 3:
+                    getUser = us.GetUserById(user.getId());
+                    us.DeleteUser(getUser);
+                    break;
+                case 4:
+                    User u = new User("Lois");
+                    us.AddUser(u);
+                    break;
+                case 5:
+                    user.setName("Marcus");
+                    us.EditUser(user);
+                    break;
+                case 0:
+                    bool = false;
+                    break;
+            }
         }
-
-
-        us.DeleteUser(getUser);
-
-        users.clear();
-        users = us.GetAll();
-        for(User u : users){
-            System.out.println(u.getId() + ": " + u.getName());
-        }
-
-
-
     }
-
-
 }
