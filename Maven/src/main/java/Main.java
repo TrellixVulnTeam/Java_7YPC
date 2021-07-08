@@ -1,9 +1,11 @@
 import Models.Author;
 import Models.Book;
+import Models.Role;
 import Models.User;
 import com.github.javafaker.Faker;
 import org.hibernate.Session;
 import org.hibernate.dialect.identity.HANAIdentityColumnSupport;
+import services.UserService;
 import utils.HibernateSessionFactoryUtil;
 
 import java.util.List;
@@ -18,6 +20,8 @@ public class Main {
 
             //CreateAuthor(session);
             //FillAuthorAndBooks(session);
+            //CreateUserAndRole(session);
+            TestUserService();
 
             session.close();
         }
@@ -86,28 +90,78 @@ public class Main {
 //        session.getTransaction().commit();
 
 
-        session.beginTransaction();
-        Random random = new Random(System.nanoTime());
-        Faker faker = new Faker();
-
-        for (int i = 0 ; i<100; i++){
-            String name = faker.book().title();
-            String description = faker.book().genre();
-            int year = 1960 + random.nextInt(50);
-            int author_id = 21 + random.nextInt(10);
-
-            Book book = new Book(name, year, description, author_id);
+//        session.beginTransaction();
+//        Random random = new Random(System.nanoTime());
+//        Faker faker = new Faker();
+//
+//        for (int i = 0 ; i<100; i++){
+//            String name = faker.book().title();
+//            String description = faker.book().genre();
+//            int year = 1960 + random.nextInt(50);
+//            int author_id = 21 + random.nextInt(10);
+//
+//            Book book = new Book(name, year, description, author_id);
 //            System.out.println(String.format("%s %s %s %s",
 //                    name,
 //                    year,
 //                    description,
 //                    author_id
 //
-//            ));
-            session.save(book);
-        }
-        session.getTransaction().commit();
+////            ));
+//            session.save(book);
+//        }
+//        session.getTransaction().commit();
 
 
     }
+
+    public static void CreateUserAndRole(Session session){
+        session.beginTransaction();
+
+        Role role = new Role("Admin");
+        session.save(role);
+
+        User user = new User("Patric");
+        user.getRoles().add(role);
+
+        session.save(user);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public static void TestUserService(){
+        UserService us = new UserService();
+
+        User user = new User("Lois");
+        us.AddUser(user);
+
+        User getUser = us.GetUserById(user.getId());
+        System.out.println("Get USER -> " + getUser.getName());
+
+        user.setName("Marcus");
+        us.EditUser(user);
+
+        getUser = us.GetUserById(user.getId());
+        System.out.println("Edit USER -> " + getUser.getName());
+
+
+        List<User> users = us.GetAll();
+        for(User u : users){
+            System.out.println(u.getId() + ": " + u.getName());
+        }
+
+
+        us.DeleteUser(getUser);
+
+        users.clear();
+        users = us.GetAll();
+        for(User u : users){
+            System.out.println(u.getId() + ": " + u.getName());
+        }
+
+
+
+    }
+
+
 }

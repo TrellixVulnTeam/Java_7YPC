@@ -11,7 +11,9 @@
     <properties>
         <maven.compiler.sourse>8</maven.compiler.sourse>
         <maven.compiler.target>8</maven.compiler.target>
+        <mssql.version>7.2.2.jre8</mssql.version>
     </properties>
+
 
 
 
@@ -28,12 +30,20 @@
             <version>2.7.3</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>0.15</version>
         </dependency>
+
+
+
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>${mssql.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>
