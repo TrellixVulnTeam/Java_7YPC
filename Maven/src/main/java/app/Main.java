@@ -1,15 +1,18 @@
 package app;
 
-import Models.Author;
-import Models.Book;
-import Models.Role;
-import Models.User;
+import Models.*;
 import com.github.javafaker.Faker;
 import org.hibernate.Session;
 import org.hibernate.dialect.identity.HANAIdentityColumnSupport;
+import org.hibernate.query.Query;
 import services.UserService;
 import utils.HibernateSessionFactoryUtil;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.awt.geom.QuadCurve2D;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -24,6 +27,8 @@ public class Main {
             //FillAuthorAndBooks(session);
             //CreateUserAndRole(session);
             //TestUserService();
+            //FillQuestions(session);
+            Searching(session);
 
             session.close();
         }
@@ -173,5 +178,121 @@ public class Main {
                     break;
             }
         }
+    }
+
+    public static void FillQuestions(Session session){
+        session.beginTransaction();
+
+       List<Question> array = new ArrayList<Question>();
+            array.add(new Question("Is cereal with milk a soup? Why or why not?", true)) ;
+            array.add(new Question("What is the sexiest and most non-sexual name?", true)) ;
+            array.add(new Question("What secret conspiracy would you like to start?", false)) ;
+            array.add(new Question("What is impossible to see, but would you like people to be able to see?", true)) ;
+            array.add(new Question("What's the weirdest smell you've ever smelled (la)?", true)) ;
+            array.add(new Question("Is a hot dog a sandwich? Why or why not?", false)) ;
+            array.add(new Question("What's the best Wi-Fi name you've ever seen?", true)) ;
+            array.add(new Question("Funniest fact you know?", true)) ;
+            array.add(new Question("What is every person doing stupidly?", true)) ;
+            array.add(new Question("What's the funniest joke you know by heart?", false)) ;
+            array.add(new Question("Why will people feel nostalgic in 40 years?", true)) ;
+            array.add(new Question("What are the unwritten rules for where you work?", true)) ;
+            array.add(new Question("How do you feel about pineapple on pizza?", false)) ;
+
+
+        for(Question q: array){
+            session.save(q);
+        }
+
+        session.getTransaction().commit();
+    }
+
+    public static void Searching(Session session){
+
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<Book> cr = cb.createQuery(Book.class);
+        Root<Book> root = cr.from(Book.class);
+        //cr.select(root);
+
+        Scanner in = new Scanner(System.in);
+
+        System.out.println(" 1: By name\n 2: By author:\n 3: By desc\n 4: By year\n 5: EXIT");
+        System.out.printf("->_");
+        int search_by = in.nextInt();
+        String search_fraze = "";
+
+        switch (search_by){
+            case 1:
+                search_fraze = Search_by_name();
+                cr.select(root).where(cb.like(root.<String>get("name"), "%" + search_fraze + "%"));
+                break;
+            case 2:
+                int search_author = Search_author(session);
+                System.out.println("Author ID >> "+ search_author);
+                cr.select(root).where(cb.equal(root.<String>get("author"), search_author));
+                break;
+            case 3:
+                search_fraze = Search_by_desc();
+                cr.select(root).where(cb.like(root.<String>get("description"), "%" + search_fraze + "%"));
+                break;
+            case 4:
+                int search_year = Search_by_year();
+                cr.select(root).where(cb.equal(root.<String>get("year"), search_year));
+                break;
+            case 5:
+                break;
+            default:
+                break;
+        }
+
+        Query<Book> query = session.createQuery(cr);
+        List<Book> results = query.getResultList();
+
+        for (Book i : results){
+            System.out.println(i.getId() +" --- " + i.getName() + " --- " + i.getAuthor().getFirstName());
+        }
+    }
+
+    static int Search_author(Session session){
+        Scanner in = new Scanner(System.in);
+        CriteriaBuilder c = session.getCriteriaBuilder();
+        CriteriaQuery<Author> ck = c.createQuery(Author.class);
+        Root<Author> rootA = ck.from(Author.class);
+
+        System.out.println("Enter searching author : ");
+        System.out.printf("->_");
+        String search_fraze = in.nextLine();
+
+        ck.select(rootA).where(c.like(rootA.<String>get("firstName"), "%" + search_fraze + "%"));
+
+        Query<Author> queryA = session.createQuery(ck);
+        List<Author> resultsA = queryA.getResultList();
+
+        int search_author = 0;
+        search_author = resultsA.get(0).getId();
+        return search_author;
+    }
+
+    static String Search_by_name(){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter searching name : ");
+        System.out.printf("->_");
+        String  search_fraze = in.nextLine();
+        return  search_fraze;
+    }
+
+    static String Search_by_desc(){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter searching desc : ");
+        System.out.printf("->_");
+        String search_fraze = in.nextLine();
+        return search_fraze
+    }
+
+    static int Search_by_year(){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter searching year : ");
+        System.out.printf("->_");
+        int search_year = in.nextInt();
+        return search_year;
     }
 }
