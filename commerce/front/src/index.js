@@ -5,9 +5,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+
+import ParticlesBg from "particles-bg";
+
 ReactDOM.render(
   <React.StrictMode>
+    <ReactNotification />
     <App />
+    <ParticlesBg num={5} type="circle" bg={true} />
   </React.StrictMode>,
   document.getElementById("root")
 );

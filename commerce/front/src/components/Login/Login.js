@@ -5,6 +5,8 @@ import { Redirect, withRouter } from "react-router-dom";
 
 import history from "../../history";
 
+import Notification from "../Notification/Notofication";
+
 class Login extends Component {
   state = {
     username: "",
@@ -25,10 +27,15 @@ class Login extends Component {
       password: this.state.password,
     };
 
-    axios.post(url, user_object).then((res) => {
-      localStorage.setItem("token", res.data.token);
-      return this.handleDashboard();
-    });
+    axios
+      .post(url, user_object)
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        return this.handleDashboard();
+      })
+      .catch((error) => {
+        Notification("danger");
+      });
   };
 
   handleDashboard() {
@@ -98,6 +105,15 @@ class Login extends Component {
             </button>
           </form>
         </div>
+        <button
+          class="btn btn-secondary"
+          onClick={() => {
+            console.log("hi");
+            Notification("danger");
+          }}
+        >
+          Hi
+        </button>
       </div>
     );
   }
