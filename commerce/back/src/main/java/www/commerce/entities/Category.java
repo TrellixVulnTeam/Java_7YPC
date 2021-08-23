@@ -3,6 +3,7 @@ package www.commerce.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import www.commerce.repositories.CatalogRepository;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,9 +23,11 @@ public class Category {
     @JsonBackReference(value="category")
     private List<Product> products;
 
-    @ManyToMany(mappedBy = "categories")
-    @JsonBackReference
-    private List<Brand> brands;
+
+    @OneToMany
+    @JoinColumn(name="category_id")
+    private List<FilterNames> filters;
+
 
     @ManyToOne //(fetch = FetchType.LAZY)
     @JoinColumn(name="catalog_id", referencedColumnName="id",nullable = false)
@@ -33,21 +36,22 @@ public class Category {
 
 
     public Category() {
+
         this.products = new ArrayList<>();
-        this.brands = new ArrayList<>();
+        this.filters = new ArrayList<>();
     }
 
     public Category(String name) {
         this.name = name;
         this.products = new ArrayList<>();
-        this.brands = new ArrayList<>();
+        this.filters = new ArrayList<>();
     }
 
-    public Category(String name, Catalog catalog) {
+    public Category(String name, int id) {
         this.name = name;
-        this.catalog = catalog;
+        //this.catalog = CatalogRepository.getById(id);
         this.products = new ArrayList<>();
-        this.brands = new ArrayList<>();
+        this.filters = new ArrayList<>();
     }
 
     public int getId() {
@@ -72,14 +76,6 @@ public class Category {
 
     public void setProducts(List<Product> products) {
         this.products = products;
-    }
-
-    public List<Brand> getBrands() {
-        return brands;
-    }
-
-    public void setBrands(List<Brand> brands) {
-        this.brands = brands;
     }
 
     public Catalog getCatalog() {

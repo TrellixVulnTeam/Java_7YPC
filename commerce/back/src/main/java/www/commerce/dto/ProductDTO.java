@@ -21,10 +21,10 @@ public class ProductDTO {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private List<Product_Details> details;
-    private Brand brand;
+
     private Category category;
     private List<Product_Images> images;
-    private List<Notes> notes;
+
 
     public ProductDTO() {
     }
@@ -32,7 +32,7 @@ public class ProductDTO {
     public ProductDTO(String title) {
         this.title = title;
         this.details = new ArrayList<>();
-        this.notes = new ArrayList<>();
+
         this.images = new ArrayList<>();
     }
 
@@ -124,13 +124,7 @@ public class ProductDTO {
         this.details = details;
     }
 
-    public Brand getBrand() {
-        return brand;
-    }
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
 
     public Category getCategory() {
         return category;
@@ -148,11 +142,4 @@ public class ProductDTO {
         this.images = images;
     }
 
-    public List<Notes> getNotes() {
-        return notes;
-    }
-
-    public void setNotes(List<Notes> notes) {
-        this.notes = notes;
-    }
 }

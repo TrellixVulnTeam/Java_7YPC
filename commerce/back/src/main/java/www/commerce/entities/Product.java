@@ -41,52 +41,48 @@ public class Product {
             name="products_details",
             joinColumns={@JoinColumn(name="PRODUCT_ID", referencedColumnName="id")},
             inverseJoinColumns={@JoinColumn(name="DETAILS_ID", referencedColumnName="id")})
-    @JsonIgnore
+
     private List<Product_Details> details;
-
-
-
-    @ManyToOne//(fetch = FetchType.LAZY)
-    @JoinColumn(name="brand_id", referencedColumnName="id",nullable = false)
-//    @JsonManagedReference(value="brand")
-    @JsonIgnore
-    private Brand brand;
-
-    @ManyToOne
-    @JoinColumn(name="category_id", nullable = false)
-//    @JsonManagedReference(value="category")
-    @JsonIgnore
-    private Category category;
-
-
-    @OneToMany(targetEntity=Product_Images.class, mappedBy="product", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Product_Images> images;
 
 
     @ManyToMany(cascade=CascadeType.MERGE)
     @JoinTable(
-            name="tblProductNotes",
+            name="Filters",
             joinColumns={@JoinColumn(name="PRODUCT_ID", referencedColumnName="id")},
-            inverseJoinColumns={@JoinColumn(name="NOTE_ID", referencedColumnName="id")})
-    @JsonIgnore
-    private List<Notes> notes;
+            inverseJoinColumns={@JoinColumn(name="FILTERS_ID", referencedColumnName="id")})
+    private List<FilterValues> filters;
+
+
+    @ManyToOne
+    @JoinColumn(name="category_id", nullable = false)
+    private Category category;
+
+    @OneToMany(targetEntity=Product_Images.class, mappedBy="product", fetch = FetchType.LAZY)
+    private List<Product_Images> images;
 
 
     public Product(String title) {
         this.title = title;
         this.details = new ArrayList<>();
-        this.notes = new ArrayList<>();
         this.images = new ArrayList<>();
+        this.filters = new ArrayList<>();
+    }
+
+    public List<FilterValues> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<FilterValues> filters) {
+        this.filters = filters;
     }
 
     public Product() {
         this.details = new ArrayList<>();
-        this.notes = new ArrayList<>();
         this.images = new ArrayList<>();
+        this.filters = new ArrayList<>();
     }
 
-    public Product(String title, String description, String link, float price, float sale_price, float discount, boolean availability, Brand brand, Category category) {
+    public Product(String title, String description, String link, float price, float sale_price, float discount, boolean availability, Category category) {
         this.title = title;
         this.description = description;
         this.link = link;
@@ -94,12 +90,11 @@ public class Product {
         this.sale_price = sale_price;
         this.discount = discount;
         this.availability = availability;
-        this.brand = brand;
         this.category = category;
 
         this.details = new ArrayList<>();
-        this.notes = new ArrayList<>();
         this.images = new ArrayList<>();
+        this.filters = new ArrayList<>();
     }
 
     public int getId() {
@@ -191,13 +186,7 @@ public class Product {
         this.details = details;
     }
 
-    public Brand getBrand() {
-        return brand;
-    }
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
 
     public Category getCategory() {
         return category;
@@ -215,11 +204,5 @@ public class Product {
         this.images = images;
     }
 
-    public List<Notes> getNotes() {
-        return notes;
-    }
 
-    public void setNotes(List<Notes> notes) {
-        this.notes = notes;
-    }
 }
