@@ -29,14 +29,12 @@ public class Category {
     private List<FilterNames> filters;
 
 
-    @ManyToOne //(fetch = FetchType.LAZY)
-    @JoinColumn(name="catalog_id", referencedColumnName="id",nullable = false)
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="catalog_id")
     private Catalog catalog;
 
 
     public Category() {
-
         this.products = new ArrayList<>();
         this.filters = new ArrayList<>();
     }
@@ -47,9 +45,12 @@ public class Category {
         this.filters = new ArrayList<>();
     }
 
-    public Category(String name, int id) {
+    public Category(String name, int catalogId) {
         this.name = name;
-        //this.catalog = CatalogRepository.getById(id);
+
+        this.catalog = new Catalog();
+        this.catalog.setId(catalogId);
+
         this.products = new ArrayList<>();
         this.filters = new ArrayList<>();
     }

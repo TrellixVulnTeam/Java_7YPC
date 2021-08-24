@@ -2,8 +2,12 @@ package www.commerce.controllers.api;
 
 
 import org.springframework.web.bind.annotation.*;
+import www.commerce.dto.CatalogDTO;
+import www.commerce.dto.CategoryDTO;
+import www.commerce.entities.Catalog;
 import www.commerce.entities.Category;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,15 +27,24 @@ public class CategoryController {
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("/categories")
-    List<Category> all() {
-        return repository.findAll();
+    List<CategoryDTO> all() {
+        List<Category> startList = repository.findAll();
+        List<CategoryDTO> list = new ArrayList<>();
+        for (Category item : startList){
+            list.add(new CategoryDTO(item.getId(), item.getName(), item.getCatalog().getId()));
+        }
+        return list;
+
     }
     // end::get-aggregate-root[]
 
     @PostMapping("/categories")
-    Category newCategory(@RequestBody Category newCategory) {
-        return repository.save(newCategory);
+    Category newCategory(@RequestBody CategoryDTO newCategory) {
+
+        Category category = new Category(newCategory.getName(), newCategory.getCatalogId());
+        return repository.save(category);
     }
+
 
     // Single item
 

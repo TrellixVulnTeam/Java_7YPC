@@ -14,7 +14,7 @@ public class Catalog {
     @Column(length = 255, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy="id")//, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="catalog", cascade = CascadeType.ALL, orphanRemoval = true)//, fetch = FetchType.LAZY)
     private List<Category> categories;
 
     public Catalog() {
