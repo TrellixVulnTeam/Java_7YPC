@@ -1,5 +1,7 @@
 package www.commerce.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ public class Catalog {
     private String name;
 
     @OneToMany(mappedBy="catalog", cascade = CascadeType.ALL, orphanRemoval = true)//, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Category> categories;
 
     public Catalog() {

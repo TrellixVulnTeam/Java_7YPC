@@ -1,86 +1,68 @@
 package www.commerce.controllers.api;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import www.commerce.dto.CatalogDTO;
-import www.commerce.dto.CategoryDTO;
 import www.commerce.entities.Catalog;
 import www.commerce.entities.Category;
 import www.commerce.repositories.CatalogRepository;
-import www.commerce.repositories.CategoryRepository;
+import www.commerce.service.MapStructMapper;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class CatalogController {
 
     private final CatalogRepository repository;
-    private final CategoryRepository categoryRepository;
+    private MapStructMapper mapstructMapper;
 
-
-    CatalogController(CatalogRepository repository, CategoryRepository categoryRepository) {
+    CatalogController( MapStructMapper mapstructMapper, CatalogRepository repository) {
         this.repository = repository;
-        this.categoryRepository = categoryRepository;
+        this.mapstructMapper = mapstructMapper;
     }
 
-    // Aggregate root
-    // tag::get-aggregate-root[]
     @GetMapping("/catalogs")
-    List<CatalogDTO> all() {
-        List<Catalog> startList = repository.findAll();
-        List<CatalogDTO> list = new ArrayList<>();
-
-        List<Category> category = categoryRepository.findAll();
-        List<CategoryDTO> categoryDTOS = new ArrayList<>();
-
-        for (Category item : category){
-            categoryDTOS.add(new CategoryDTO(item.getId(), item.getName(), item.getCatalog().getId()));
-        }
-
-        for (Catalog item : startList){
-
-            List<CategoryDTO> tmp = new ArrayList<>();
-
-            for(CategoryDTO i : categoryDTOS){
-                if(item.getId() == i.getCatalogId())
-                    tmp.add(i);
-            }
-
-            list.add(new CatalogDTO(item.getId(), item.getName(), tmp));
-        }
-        return list;
+    ResponseEntity<List<CatalogDTO>> all() {
+        return new ResponseEntity<List<CatalogDTO>>(
+                mapstructMapper.catalogsToCatalogDTO(
+                        repository.findAll()
+                ),
+                HttpStatus.OK
+        );
     }
-    // end::get-aggregate-root[]
 
     @PostMapping("/catalogs")
-    Catalog newCatalog(@RequestBody Catalog newCatalog) {
-        return repository.save(newCatalog);
+    ResponseEntity<Void> newCatalog(@RequestBody CatalogDTO newCatalog) {
+        repository.save(
+                mapstructMapper.catalogDTOToCatalog(newCatalog)
+        );
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    // Single item
-
     @GetMapping("/catalogs/{id}")
-    Optional<Catalog> one(@PathVariable int id) {
-
-        return repository.findById(id);
-                //.orElseThrow(() -> new EmployeeNotFoundException(id));
+    ResponseEntity<CatalogDTO> one(@PathVariable int id) {
+        return new ResponseEntity<>(
+                mapstructMapper.catalogToCatalogDTO(
+                        repository.findById(id).get()
+                ),
+                HttpStatus.OK
+        );
     }
 
     @PutMapping("/catalogs/{id}")
-    Catalog updateCatalog(@RequestBody Catalog newCatalog, @PathVariable int id) {
-
-        return repository.findById(id)
-                .map(catalog -> {
-                    catalog.setName(newCatalog.getName());
-                    return repository.save(catalog);
-                })
-                .orElseGet(() -> {
-                    newCatalog.setId(id);
-                    return repository.save(newCatalog);
-                });
+    ResponseEntity<Void> updateCatalog(@RequestBody CatalogDTO newCatalog, @PathVariable int id) {
+        Catalog catalog = repository.findById(id).get();
+        List<Category> tmp = catalog.getCategories();
+        catalog = mapstructMapper.catalogDTOToCatalog(newCatalog);
+        if(catalog.getCategories() == null){
+            catalog.setCategories(tmp);
+        }
+        repository.save(catalog);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/catalogs/{id}")

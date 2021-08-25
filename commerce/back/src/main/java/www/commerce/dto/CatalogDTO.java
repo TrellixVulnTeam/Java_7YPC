@@ -1,6 +1,7 @@
 package www.commerce.dto;
 
 import lombok.Data;
+import org.codehaus.jackson.annotate.JsonProperty;
 import www.commerce.entities.Category;
 
 import java.util.List;
@@ -8,8 +9,11 @@ import java.util.List;
 @Data
 public class CatalogDTO {
 
+    @JsonProperty("id")
     private int id;
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("categories")
     private List<CategoryDTO> categories;
 
 
@@ -22,5 +26,8 @@ public class CatalogDTO {
         this.id = id;
         this.name = name;
         this.categories = categories;
+    }
+
+    public CatalogDTO() {
     }
 }
