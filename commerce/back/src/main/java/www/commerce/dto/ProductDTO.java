@@ -20,10 +20,10 @@ public class ProductDTO {
     private boolean availability;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    private List<Product_Details> details;
+    //private List<Product_Details> details;
 
     private Category category;
-    private List<Product_Images> images;
+    private List<ImageProductDTO> images;
 
 
     public ProductDTO() {
@@ -31,9 +31,9 @@ public class ProductDTO {
 
     public ProductDTO(String title) {
         this.title = title;
-        this.details = new ArrayList<>();
-
-        this.images = new ArrayList<>();
+//        this.details = new ArrayList<>();
+//
+//        this.images = new ArrayList<>();
     }
 
     public int getId() {
@@ -116,13 +116,13 @@ public class ProductDTO {
         this.modifiedAt = modifiedAt;
     }
 
-    public List<Product_Details> getDetails() {
-        return details;
-    }
-
-    public void setDetails(List<Product_Details> details) {
-        this.details = details;
-    }
+//    public List<Product_Details> getDetails() {
+//        return details;
+//    }
+//
+//    public void setDetails(List<Product_Details> details) {
+//        this.details = details;
+//    }
 
 
 
@@ -134,12 +134,12 @@ public class ProductDTO {
         this.category = category;
     }
 
-    public List<Product_Images> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Product_Images> images) {
-        this.images = images;
-    }
+//    public List<Product_Images> getImages() {
+//        return images;
+//    }
+//
+//    public void setImages(List<Product_Images> images) {
+//        this.images = images;
+//    }
 
 }
