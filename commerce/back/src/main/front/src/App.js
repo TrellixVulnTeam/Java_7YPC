@@ -14,6 +14,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Login/Login";
 import Navbar from "./components/Navbar/Navbar";
 import Banner from "./components/Banner/Banner";
+import UploadFiles from "./components/upload-files";
 
 import history from "./history";
 import Register from "./components/Register/Register";
@@ -38,6 +39,7 @@ function App() {
           <Route path="/dashboard" exact component={() => <Dashboard />} />
           <Route path="/register" exact component={() => <Register />} />
           <Route path="/banner" exact component={() => <Banner />} />
+          <Route path="/upload" exact component={() => <UploadFiles />} />
         </Switch>
       </div>
     </BrowserRouter>

@@ -1,8 +1,11 @@
 package www.commerce.entities;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
+@Data
 @Table(name="products_images")
 public class Product_Images {
     @Id
@@ -15,6 +18,7 @@ public class Product_Images {
 
     private String image;
 
+
     public Product_Images(Product product, String image) {
         this.product = product;
         this.image = image;
@@ -23,27 +27,4 @@ public class Product_Images {
     public Product_Images() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 }
