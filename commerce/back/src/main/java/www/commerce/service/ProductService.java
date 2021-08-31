@@ -14,7 +14,7 @@ public interface ProductService {
 
     Product getProductById(int id);
 
-    Product insert(Product product);
+    Product AddProduct(Product product);
 
     void updateProduct(int id, ProductDTO product);
 

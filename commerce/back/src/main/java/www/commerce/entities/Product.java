@@ -2,6 +2,8 @@ package www.commerce.entities;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @Entity
 @Table(name="products")
 @Data
+@Getter
+@Setter
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Product {
     @Id
@@ -38,11 +42,10 @@ public class Product {
 
     @ManyToMany(cascade=CascadeType.MERGE)
     @JoinTable(
-            name="products_details",
+            name="Details",
             joinColumns={@JoinColumn(name="PRODUCT_ID", referencedColumnName="id")},
             inverseJoinColumns={@JoinColumn(name="DETAILS_ID", referencedColumnName="id")})
-
-    private List<Product_Details> details;
+    private List<DetailValue> details;
 
 
     @ManyToMany(cascade=CascadeType.MERGE)
@@ -82,7 +85,7 @@ public class Product {
         this.filters = new ArrayList<>();
     }
 
-    public Product(String title, String description, String link, float price, float sale_price, float discount, boolean availability, Category category) {
+    public Product(String title, String description, String link, float price, float sale_price, float discount, boolean availability, int categoryId) {
         this.title = title;
         this.description = description;
         this.link = link;
@@ -90,119 +93,37 @@ public class Product {
         this.sale_price = sale_price;
         this.discount = discount;
         this.availability = availability;
-        this.category = category;
+
+        this.category = new Category();
+        this.category.setId(categoryId);
 
         this.details = new ArrayList<>();
         this.images = new ArrayList<>();
         this.filters = new ArrayList<>();
     }
 
-    public int getId() {
-        return id;
-    }
+//    public Product(int id, String title, String description, String link, float price, float sale_price, float discount, boolean availability, LocalDateTime createdAt, LocalDateTime modifiedAt, List<DetailValues> details, List<FilterValues> filters, Category category, List<Product_Images> images) {
+//        this.id = id;
+//        this.title = title;
+//        this.description = description;
+//        this.link = link;
+//        this.price = price;
+//        this.sale_price = sale_price;
+//        this.discount = discount;
+//        this.availability = availability;
+//        this.createdAt = createdAt;
+//        this.modifiedAt = modifiedAt;
+//        this.details = details;
+//        this.filters = filters;
+//        this.category = category;
+//        this.images = images;
+//    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public float getSale_price() {
-        return sale_price;
-    }
-
-    public void setSale_price(float sale_price) {
-        this.sale_price = sale_price;
-    }
-
-    public float getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(float discount) {
-        this.discount = discount;
-    }
-
-    public boolean isAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
-    }
-
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getModifiedAt() {
-        return modifiedAt;
-    }
-
-    public void setModifiedAt(LocalDateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
-    }
-
-    public List<Product_Details> getDetails() {
+    public List<DetailValue> getDetails() {
         return details;
     }
 
-    public void setDetails(List<Product_Details> details) {
+    public void setDetails(List<DetailValue> details) {
         this.details = details;
     }
-
-
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public List<Product_Images> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Product_Images> images) {
-        this.images = images;
-    }
-
-
 }

@@ -1,8 +1,13 @@
 package www.commerce.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonProperty;
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
 public class CategorySlimDTO {
     @JsonProperty("id")
     private int id;
@@ -11,8 +16,7 @@ public class CategorySlimDTO {
     @JsonProperty("catalogId")
     private int catalogId;
 
-    public CategorySlimDTO(int id, String name, int catalogId) {
-        this.id = id;
+    public CategorySlimDTO( String name, int catalogId) {
         this.name = name;
         this.catalogId = catalogId;
     }

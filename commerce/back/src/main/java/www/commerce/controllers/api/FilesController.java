@@ -1,5 +1,6 @@
 package www.commerce.controllers.api;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -93,6 +94,7 @@ public class FilesController {
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = storageService.load(filename);
         return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 }

@@ -1,13 +1,8 @@
 package www.commerce.service;
 
 import org.mapstruct.Mapper;
-import www.commerce.dto.CatalogDTO;
-import www.commerce.dto.CategoryDTO;
-import www.commerce.dto.CategorySlimDTO;
-import www.commerce.dto.ImageProductDTO;
-import www.commerce.entities.Catalog;
-import www.commerce.entities.Category;
-import www.commerce.entities.Product_Images;
+import www.commerce.dto.*;
+import www.commerce.entities.*;
 
 import java.util.List;
 
@@ -16,11 +11,16 @@ import java.util.List;
 )
 public interface MapStructMapper {
 
-    CategorySlimDTO categoryToCategorySlimDTO(Category category);
+
 
     CategoryDTO categoryToCategoryDTO(Category category);
 
     Category categoryDTOToCategory(CategoryDTO categoryDTO);
+    Category categorySlimDTOToCategory(CategorySlimDTO categoryDTO);
+
+    CategorySlimDTO categoryToCategorySlimDTO(Category category);
+
+
 
     CatalogDTO catalogToCatalogDTO(Catalog catalog);
 
@@ -35,6 +35,20 @@ public interface MapStructMapper {
     ImageProductDTO imageToImageDTO(Product_Images image);
 
     Product_Images imageDTOToImage(ImageProductDTO image);
+
+
+    List<ProductDTO> productsToProductDTO(List<Product> products);
+
+    Product productDTOToProduct(ProductDTO productDTO);
+
+    ProductDTO productToProductDTO(Product product);
+
+
+    DetailValue DetailValueDTOToDetailValue(DetailValueDTO detailValueDTO);
+    DetailValueDTO DetailValueToDetailValueDTO(DetailValue detailValue);
+
+    DetailName DetailNameDTOToDetailName(DetailNameDTO detailNameDTO);
+    DetailNameDTO DetailNameToDetailNameDTO(DetailName detailName);
 
     //UserGetDto userToUserGetDto(User user);
 

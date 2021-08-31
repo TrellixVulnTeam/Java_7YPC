@@ -1,13 +1,12 @@
 package www.commerce.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
@@ -15,9 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 //@NoArgsConstructor
 @ToString
-@Table(name="tblFilterValues")
-public class FilterValues {
-
+@Table(name="tblDetailNames")
+public class DetailName {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -27,15 +25,20 @@ public class FilterValues {
 
     private boolean IsDeleted;
 
-    private boolean IsAdmin;
-
     @CreatedDate
     private LocalDateTime createdAt;
 
-    private int FilterNameId;
+    @OneToMany
+    @JoinColumn(name="detailsNames_id")
+    private List<DetailValue> values;
 
+    public DetailName() {
+        this.values = new ArrayList<>();
+    }
 
-    public FilterValues() {
-
+    public DetailName(String name, boolean isDeleted) {
+        this.name = name;
+        IsDeleted = isDeleted;
+        this.values = new ArrayList<>();
     }
 }

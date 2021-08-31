@@ -3,21 +3,21 @@ import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import "animate.css";
 
-function Notification(message) {
-  switch (message) {
+function Notification(type, message) {
+  switch (type) {
     case "danger":
-      Danger();
+      Danger(message);
       break;
     case "success":
-      Success();
+      Success(message);
       break;
   }
 }
 
-function Danger() {
+function Danger(message) {
   return store.addNotification({
     title: "Danger",
-    message: "Login is denie",
+    message: message,
     type: "danger", // 'default', 'success', 'info', 'warning'
     insert: "top",
     container: "top-full", // where to position the notifications
@@ -29,10 +29,10 @@ function Danger() {
   });
 }
 
-function Success() {
+function Success(message) {
   return store.addNotification({
     title: "Success",
-    message: "Login is success",
+    message: message,
     type: "success", // 'default', 'success', 'info', 'warning'
     container: "bottom-left", // where to position the notifications
     animationIn: ["animated", "fadeIn"], // animate.css classes that's applied

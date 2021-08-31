@@ -1,13 +1,3 @@
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.btn {
-  margin-left: 30%;
-}
 
-input {
-  height: 30px;
-}
+

@@ -6,37 +6,49 @@ import { Redirect, withRouter } from "react-router-dom";
 import history from "../../history";
 
 import Notification from "../Notification/Notofication";
+import { validation } from "./validation";
 
-class Login extends Component {
+export class Login extends Component {
   state = {
     username: "",
     password: "",
+    errors: {},
   };
   constructor() {
     super();
     this.submitForm = this.submitForm.bind(this);
   }
 
-  submitForm = (event) => {
+  async submitForm(event) {
     event.preventDefault();
 
-    const url = "http://localhost:8081/api/public/authenticate";
+    console.log(this.state);
 
-    const user_object = {
-      username: this.state.username,
-      password: this.state.password,
-    };
+    let error = validation(this.state);
 
-    axios
-      .post(url, user_object)
-      .then((res) => {
-        localStorage.setItem("token", res.data.token);
-        return this.handleDashboard();
-      })
-      .catch((error) => {
-        Notification("danger");
-      });
-  };
+    const isValid = Object.keys(error).length == 0;
+
+    if (isValid) {
+      const url = "http://localhost:8081/api/public/authenticate";
+
+      const user_object = {
+        username: this.state.username,
+        password: this.state.password,
+      };
+
+      await axios
+        .post(url, user_object)
+        .then((res) => {
+          localStorage.setItem("token", res.data.token);
+          return this.handleDashboard();
+        })
+        .catch((error) => {
+          Notification("danger", "Login is failed");
+        });
+    } else {
+      this.setState({ errors: error });
+    }
+  }
 
   handleDashboard() {
     const token = localStorage.getItem("token");
@@ -66,54 +78,57 @@ class Login extends Component {
   };
 
   render() {
-    const { username, password } = this.state;
+    const { username, password, errors } = this.state;
     return (
-      <div>
-        <div className="wrapper">
-          <div>LOGIN</div>
-          <form onSubmit={this.submitForm}>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">
-                Username
-              </label>
-              <input
-                //type="email"
-                class="form-control"
-                //aria-describedby="emailHelp"
-                value={username}
-                id="username"
-                name="username"
-                onChange={this.onChangeInput}
-              />
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                class="form-control"
-                id="password"
-                name="password"
-                value={password}
-                onChange={this.onChangeInput}
-              />
-            </div>
-
-            <button type="submit" class="btn btn-secondary">
-              Login
-            </button>
-          </form>
+      <div class="container">
+        <div class="row">
+          <div class="offset-md-3 col-md-6">
+            <h2 class="text-center">LOGIN</h2>
+            <form onSubmit={this.submitForm}>
+              <div class="form-group">
+                <label class="control-label">Username</label>
+                <input
+                  class="form-control"
+                  id="username"
+                  required
+                  type="text"
+                  name="username"
+                  value={username}
+                  onChange={this.onChangeInput}
+                />
+                {!!errors.username && (
+                  <div className="invalid-feedback">{errors.username}</div>
+                )}
+              </div>
+              <div class="form-group">
+                <label class="control-label">Password</label>
+                <input
+                  class="form-control"
+                  type="password"
+                  data-val="true"
+                  id="password"
+                  required
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={this.onChangeInput}
+                />
+                {!!errors.password && (
+                  <div className="invalid-feedback">{errors.password}</div>
+                )}
+              </div>
+              <div class="d-flex align-items-end flex-column">
+                <div class="form-group mt-2">
+                  <input
+                    type="submit"
+                    value="Вхід"
+                    class="btn btn-warning px-5"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-        <button
-          class="btn btn-secondary"
-          onClick={() => {
-            console.log("hi");
-            Notification("danger");
-          }}
-        >
-          Hi
-        </button>
       </div>
     );
   }

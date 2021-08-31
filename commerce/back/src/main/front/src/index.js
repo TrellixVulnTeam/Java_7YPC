@@ -1,20 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import "./App.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
 
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 
-import ParticlesBg from "particles-bg";
+import { Provider } from "react-redux";
+import store from "./store";
 
 ReactDOM.render(
   <React.StrictMode>
     <ReactNotification />
-    <App />
-    <ParticlesBg num={5} type="circle" bg={true} />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
