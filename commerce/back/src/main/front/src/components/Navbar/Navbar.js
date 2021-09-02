@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 
 import "bootstrap/dist/js/bootstrap.min.js";
 
-import "./Navbar.css";
+import "../Navbar/Navbar.css";
 
 const Navbar = () => {
   return (
-    <Fragment>
-      <Container>
+     <Fragment>
+       <Container>          
         <Row>
           <nav className="navbar navbar-expand-lg navbar-light bg">
             <div className="container-fluid">
@@ -34,9 +34,9 @@ const Navbar = () => {
               >
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                   <li className="nav-item">
-                    <a className="nav-link active" aria-current="page" href="/">
+                    <Link className="nav-link active" aria-current="page" to="/">
                       Home
-                    </a>
+                    </Link>
                   </li>
 
                   <li className="nav-item">
@@ -46,44 +46,45 @@ const Navbar = () => {
                   </li>
 
                   <li className="nav-item">
-                    <a
+                    <Link
                       className="nav-link active"
                       aria-current="page"
-                      href="/login"
+                      to="/login"
                     >
                       Login
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a
+                    <Link
                       className="nav-link active"
                       aria-current="page"
-                      href="/register"
+                      to="/register"
                     >
                       Register
-                    </a>
+                    </Link>
                   </li>
+
                   <li className="nav-item">
                     <a className="nav-link active" aria-current="page" href="#">
                       Logout
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a
+                    <Link
                       className="nav-link active"
                       aria-current="page"
-                      href="/dashboard"
+                      to="/dashboard"
                     >
                       Dashboard
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
             </div>
           </nav>
         </Row>
-      </Container>
-    </Fragment>
+       </Container>
+     </Fragment>
   );
 };
 

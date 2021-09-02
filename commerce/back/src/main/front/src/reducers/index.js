@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import loginReducer from "./login";
 import catalogReducer from "./catalogs";
+import auth from "./auth";
+import message from "./messsage";
 
 export default combineReducers({
-  loginReducer,
   catalogReducer,
+  auth,
+  message,
 });

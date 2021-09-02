@@ -5,9 +5,15 @@ import lombok.Data;
 @Data
 public class UserDTO {
 
-    private String id;
-
     private String username;
-    private String fullName;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 
 }

@@ -26,6 +26,10 @@ public interface MapStructMapper {
 
     Catalog catalogDTOToCatalog(CatalogDTO catalogDTO);
 
+    CatalogSlimDTO catalogToCatalogSlimDTO(Catalog catalog);
+
+    Catalog catalogSlimDTOToCatalog(CatalogSlimDTO catalogSlimDTO);
+
     //CatalogAllDto authorToAuthorAllDto(Author author);
 
     List<CatalogDTO> catalogsToCatalogDTO(List<Catalog> catalogs);

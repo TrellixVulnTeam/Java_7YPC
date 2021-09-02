@@ -1,17 +1,31 @@
 package www.commerce.response;
 
 import java.io.Serializable;
+import java.util.List;
 
-public class JwtResponse implements Serializable {
+public class JwtResponse {
 
-    private final String jwttoken;
+    private String accessToken;
+    private String tokenType = "Bearer";
 
-    public JwtResponse(String jwttoken) {
-        this.jwttoken = jwttoken;
+    public JwtResponse(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public String getToken() {
-        return this.jwttoken;
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getTokenType() {
+        return tokenType;
+    }
+
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
     }
 
 }

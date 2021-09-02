@@ -1,27 +1,41 @@
 import React, { Component } from "react";
-import "./home.css";
 
-class Home extends Component {
+import UserService from "../../services/user.service.js";
+
+export default class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      content: ""
+    };
+  }
+
+  componentDidMount() {
+    UserService.getPublicContent().then(
+      response => {
+        this.setState({
+          content: response.data
+        });
+      },
+      error => {
+        this.setState({
+          content:
+            (error.response && error.response.data) ||
+            error.message ||
+            error.toString()
+        });
+      }
+    );
+  }
+
   render() {
     return (
-      <div className="container catalogs">
-        <ul>
-          <li>
-            <a href="#home">Home</a>
-          </li>
-          <li>
-            <a href="#news">News</a>
-          </li>
-          <li>
-            <a href="#contact">Contact</a>
-          </li>
-          <li>
-            <a href="#about">About</a>
-          </li>
-        </ul>
+      <div className="container">
+        <header className="jumbotron">
+          <h3>{this.state.content}</h3>
+        </header>
       </div>
     );
   }
 }
-
-export default Home;

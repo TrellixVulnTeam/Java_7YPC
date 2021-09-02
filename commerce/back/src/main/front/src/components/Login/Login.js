@@ -3,50 +3,71 @@ import "../Login/Login.css";
 import axios from "axios";
 import { Redirect, withRouter } from "react-router-dom";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js";
+
 import history from "../../history";
 
 import Notification from "../Notification/Notofication";
 import { validation } from "./validation";
 
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+
+import { isEmail } from "validator";
+
+import { connect } from "react-redux";
+import { login } from "../../actions/auth";
+
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        This field is required!
+      </div>
+    );
+  }
+};
+
 export class Login extends Component {
-  state = {
-    username: "",
-    password: "",
-    errors: {},
-  };
-  constructor() {
-    super();
-    this.submitForm = this.submitForm.bind(this);
+  constructor(props) {
+    super(props);
+    this.handleLogin = this.handleLogin.bind(this);
+
+    this.state = {
+      username: "",
+      password: "",
+      loading: false,
+    };
   }
 
-  async submitForm(event) {
-    event.preventDefault();
+  handleLogin(e) {
+    e.preventDefault();
 
-    console.log(this.state);
+    this.setState({
+      loading: true,
+    });
 
-    let error = validation(this.state);
+    this.form.validateAll();
 
-    const isValid = Object.keys(error).length == 0;
+    const { dispatch, history } = this.props;
 
-    if (isValid) {
-      const url = "http://localhost:8081/api/public/authenticate";
-
-      const user_object = {
-        username: this.state.username,
-        password: this.state.password,
-      };
-
-      await axios
-        .post(url, user_object)
-        .then((res) => {
-          localStorage.setItem("token", res.data.token);
-          return this.handleDashboard();
+    if (this.checkBtn.context._errors.length === 0) {
+      dispatch(login(this.state.username, this.state.password))
+        .then(() => {
+          history.push("/home");
+          window.location.reload();
         })
-        .catch((error) => {
-          Notification("danger", "Login is failed");
+        .catch(() => {
+          this.setState({
+            loading: false,
+          });
         });
     } else {
-      this.setState({ errors: error });
+      this.setState({
+        loading: false,
+      });
     }
   }
 
@@ -78,55 +99,87 @@ export class Login extends Component {
   };
 
   render() {
-    const { username, password, errors } = this.state;
+    const { isLoggedIn, message } = this.props;
+
+    if (isLoggedIn) {
+      return <Redirect to="/profile" />;
+    }
+
     return (
-      <div class="container">
-        <div class="row">
-          <div class="offset-md-3 col-md-6">
-            <h2 class="text-center">LOGIN</h2>
-            <form onSubmit={this.submitForm}>
-              <div class="form-group">
-                <label class="control-label">Username</label>
-                <input
-                  class="form-control"
-                  id="username"
-                  required
-                  type="text"
-                  name="username"
-                  value={username}
-                  onChange={this.onChangeInput}
-                />
-                {!!errors.username && (
-                  <div className="invalid-feedback">{errors.username}</div>
-                )}
-              </div>
-              <div class="form-group">
-                <label class="control-label">Password</label>
-                <input
-                  class="form-control"
-                  type="password"
-                  data-val="true"
-                  id="password"
-                  required
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={this.onChangeInput}
-                />
-                {!!errors.password && (
-                  <div className="invalid-feedback">{errors.password}</div>
-                )}
-              </div>
-              <div class="d-flex align-items-end flex-column">
-                <div class="form-group mt-2">
-                  <input
-                    type="submit"
-                    value="Вхід"
-                    class="btn btn-warning px-5"
-                  />
+      <div classNameName="maincontainer">
+        <div className="container-fluid">
+          <div className="row no-gutter">
+            <div className="col-md-6 d-none d-md-flex bg-image"></div>
+
+            <div className="col-md-6 bg-light">
+              <div className="login d-flex align-items-center py-5">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-lg-10 col-xl-7 mx-auto">
+                      <h3 className="display-4">Login</h3>
+                      <Form
+                        onSubmit={this.handleLogin}
+                        ref={(c) => {
+                          this.form = c;
+                        }}
+                      >
+                        <div className="mb-3">
+                          <Input
+                            id="inputEmail"
+                            type="email"
+                            placeholder="Email address"
+                            required=""
+                            autofocus=""
+                            value={this.state.username}
+                            onChange={this.onChangeInput}
+                            validations={[required]}
+                            className="form-control rounded-pill border-0 shadow-sm px-4"
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <Input
+                            id="inputPassword"
+                            type="password"
+                            placeholder="Password"
+                            required=""
+                            value={this.state.password}
+                            onChange={this.onChangeInput}
+                            validations={[required]}
+                            className="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
+                          />
+                        </div>
+                        <div className="d-grid gap-2 mt-2">
+                          <button
+                            type="submit"
+                            disabled={this.state.loading}
+                            className="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
+                          >
+                            {this.state.loading ? (
+                              <span className="spinner-border spinner-border-sm"></span>
+                            ) : (
+                              <span>Sign in</span>
+                            )}
+                          </button>
+                        </div>
+                        {message && (
+                          <div className="form-group">
+                            <div className="alert alert-danger" role="alert">
+                              {message}
+                            </div>
+                          </div>
+                        )}
+                        <CheckButton
+                          style={{ display: "none" }}
+                          ref={(c) => {
+                            this.checkBtn = c;
+                          }}
+                        />
+                      </Form>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -134,4 +187,13 @@ export class Login extends Component {
   }
 }
 
-export default withRouter(Login);
+function mapStateToProps(state) {
+  const { isLoggedIn } = state.auth;
+  const { message } = state.message;
+  return {
+    isLoggedIn,
+    message,
+  };
+}
+
+export default connect(mapStateToProps)(Login);
