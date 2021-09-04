@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import CatalogDataService from "../../services/catalog-service";
 import { connect } from "react-redux";
 
-import { getCatalogList } from "../../actions/catalogs";
+import { getCatalogList } from "../../redux/actions/catalogs";
 
 class CatalogList extends React.Component {
   constructor(props) {

@@ -53,7 +53,7 @@ public class Product {
             name="Filters",
             joinColumns={@JoinColumn(name="PRODUCT_ID", referencedColumnName="id")},
             inverseJoinColumns={@JoinColumn(name="FILTERS_ID", referencedColumnName="id")})
-    private List<FilterValues> filters;
+    private List<FilterValue> filters;
 
 
     @ManyToOne
@@ -71,11 +71,11 @@ public class Product {
         this.filters = new ArrayList<>();
     }
 
-    public List<FilterValues> getFilters() {
+    public List<FilterValue> getFilters() {
         return filters;
     }
 
-    public void setFilters(List<FilterValues> filters) {
+    public void setFilters(List<FilterValue> filters) {
         this.filters = filters;
     }
 
@@ -102,22 +102,28 @@ public class Product {
         this.filters = new ArrayList<>();
     }
 
-//    public Product(int id, String title, String description, String link, float price, float sale_price, float discount, boolean availability, LocalDateTime createdAt, LocalDateTime modifiedAt, List<DetailValues> details, List<FilterValues> filters, Category category, List<Product_Images> images) {
-//        this.id = id;
-//        this.title = title;
-//        this.description = description;
-//        this.link = link;
-//        this.price = price;
-//        this.sale_price = sale_price;
-//        this.discount = discount;
-//        this.availability = availability;
-//        this.createdAt = createdAt;
-//        this.modifiedAt = modifiedAt;
-//        this.details = details;
-//        this.filters = filters;
-//        this.category = category;
-//        this.images = images;
-//    }
+    public Product(String title, String description, String link, float price, float sale_price, float discount, boolean availability, int categoryId,
+                   List<DetailValue> details
+            , List<FilterValue> filters
+                   //List<Product_Images> images
+    ) {
+        this.title = title;
+        this.description = description;
+        this.link = link;
+        this.price = price;
+        this.sale_price = sale_price;
+        this.discount = discount;
+        this.availability = availability;
+
+        this.category = new Category();
+        this.category.setId(categoryId);
+
+        this.details = details;
+       this.images = new ArrayList<>();
+        this.filters = filters;
+    }
+
+
 
     public List<DetailValue> getDetails() {
         return details;
@@ -125,5 +131,13 @@ public class Product {
 
     public void setDetails(List<DetailValue> details) {
         this.details = details;
+    }
+
+    public List<Product_Images> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Product_Images> images) {
+        this.images = images;
     }
 }

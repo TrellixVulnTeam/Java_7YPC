@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 //@NoArgsConstructor
 @ToString
-@Table(name="tblDetailValues")
+@Table(name="DetailValues")
 public class DetailValue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,20 +21,18 @@ public class DetailValue {
     @Column(length = 255, nullable = false)
     private String name;
 
-    private boolean IsDeleted;
+    private boolean isDeleted;
 
-    @ManyToOne
-    @JoinColumn(name="detailNames_id", nullable = false)
-    private DetailName detailName;
+    private int detailName_id;
 
     public DetailValue() {
     }
 
     public DetailValue(String name, boolean isDeleted, int detailNameId) {
         this.name = name;
-        IsDeleted = isDeleted;
-
-        this.detailName = new DetailName();
-        this.detailName.setId(detailNameId);
+        this.isDeleted = isDeleted;
+        this.detailName_id = detailNameId;
     }
+
+
 }

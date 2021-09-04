@@ -18,7 +18,7 @@ import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
 import { connect } from "react-redux";
-import { login } from "../../actions/auth";
+import { login } from "../../redux/actions/auth";
 
 const required = (value) => {
   if (!value) {

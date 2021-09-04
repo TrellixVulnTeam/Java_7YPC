@@ -5,14 +5,13 @@ import { Redirect, withRouter } from "react-router-dom";
 import { FormErrors } from "../FormErrors/FormErrors";
 import history from "../../history";
 
-
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { connect } from "react-redux";
 
 import { isEmail } from "validator";
-import { register } from "../../actions/auth";
+import { register } from "../../redux/actions/auth";
 
 import Notification from "../Notification/Notofication";
 
@@ -67,8 +66,8 @@ class Register extends Component {
       email: "",
       password: "",
     },
-      // email: "",
-      successful: false,
+    // email: "",
+    successful: false,
   };
 
   constructor() {
@@ -100,7 +99,7 @@ class Register extends Component {
     }
   };
 
-   handleRegister(e) {
+  handleRegister(e) {
     e.preventDefault();
 
     this.setState({
@@ -111,9 +110,7 @@ class Register extends Component {
 
     if (this.checkBtn.context._errors.length === 0) {
       this.props
-        .dispatch(
-          register(this.state.username, this.state.password)
-        )
+        .dispatch(register(this.state.username, this.state.password))
         .then(() => {
           this.setState({
             successful: true,
@@ -180,11 +177,10 @@ class Register extends Component {
     const { error } = this.state;
     const { message } = this.props;
 
-
     return (
       // <div>
       //   <div>
-          /* <form className="card-body" onSubmit={this.submitForm}>
+      /* <form className="card-body" onSubmit={this.submitForm}>
             <div className="form-group mb-3">
               <label className="mb-2">
                 <strong>Email</strong>
@@ -235,7 +231,7 @@ class Register extends Component {
           </form>
         </div> */
 
-          /* <div class="container">
+      /* <div class="container">
             <div class="row">
               <div class="offset-md-3 col-md-6">
                 <h2 class="text-center">REGISTER</h2>
@@ -243,86 +239,85 @@ class Register extends Component {
                   <a href="/register">Створити новий акаунт</a>
                 </div> */
 
-                // <form onSubmit={this.submitForm}>
-                //   <div class="form-group">
-                //     <label class="control-label" for="Email">
-                //       &#x415;&#x43B;&#x435;&#x43A;&#x442;&#x440;&#x43E;&#x43D;&#x43D;&#x430;
-                //       &#x430;&#x434;&#x440;&#x435;&#x441;&#x430;
-                //     </label>
-                //     <input
-                //       class="form-control"
-                //       // data-val="true"
-                //       // data-val-required="&#x412;&#x43A;&#x430;&#x436;&#x456;&#x442;&#x44C; &#x43F;&#x43E;&#x448;&#x442;&#x443;"
-                //       id="Email"
-                //       required
-                //       type="email"
-                //       name="email"
-                //       className={
-                //         error.email.length > 0
-                //           ? "is-invalid form-control"
-                //           : "form-control"
-                //       }
-                //       onChange={this.formObject}
-                //     />
-                //     {error.email.length > 0 && (
-                //       <span className="invalid-feedback">{error.email}</span>
-                //     )}
-                //     <span
-                //       class="text-danger field-validation-valid"
-                //       data-valmsg-for="Email"
-                //       data-valmsg-replace="true"
-                //     ></span>
-                //   </div>
-                //   <div class="form-group">
-                //     <label class="control-label" for="Password">
-                //       &#x41F;&#x430;&#x440;&#x43E;&#x43B;&#x44C;
-                //     </label>
-                //     <input
-                //       class="form-control"
-                //       type="password"
-                //       data-val="true"
-                //       // data-val-required="&#x412;&#x43A;&#x430;&#x436;&#x456;&#x442;&#x44C; &#x43F;&#x430;&#x440;&#x43E;&#x43B;&#x44C;"
-                //       id="Password"
-                //       required
-                //       type="password"
-                //       name="password"
-                //       className={
-                //         error.password.length > 0
-                //           ? "is-invalid form-control"
-                //           : "form-control"
-                //       }
-                //       onChange={this.formObject}
-                //     />
-                //     {error.password.length > 0 && (
-                //       <span className="invalid-feedback">{error.password}</span>
-                //     )}
-                //     <span
-                //       class="text-danger field-validation-valid"
-                //       data-valmsg-for="Password"
-                //       data-valmsg-replace="true"
-                //     ></span>
-                //   </div>
-                //   <div class="d-flex align-items-end flex-column">
-                //     <div class="form-group mt-2">
-                //       <input
-                //         type="submit"
-                //         value="Вхід"
-                //         class="btn btn-warning px-5"
-                //       />
-                //     </div>
-                //   </div>
-                  /* <input
+      // <form onSubmit={this.submitForm}>
+      //   <div class="form-group">
+      //     <label class="control-label" for="Email">
+      //       &#x415;&#x43B;&#x435;&#x43A;&#x442;&#x440;&#x43E;&#x43D;&#x43D;&#x430;
+      //       &#x430;&#x434;&#x440;&#x435;&#x441;&#x430;
+      //     </label>
+      //     <input
+      //       class="form-control"
+      //       // data-val="true"
+      //       // data-val-required="&#x412;&#x43A;&#x430;&#x436;&#x456;&#x442;&#x44C; &#x43F;&#x43E;&#x448;&#x442;&#x443;"
+      //       id="Email"
+      //       required
+      //       type="email"
+      //       name="email"
+      //       className={
+      //         error.email.length > 0
+      //           ? "is-invalid form-control"
+      //           : "form-control"
+      //       }
+      //       onChange={this.formObject}
+      //     />
+      //     {error.email.length > 0 && (
+      //       <span className="invalid-feedback">{error.email}</span>
+      //     )}
+      //     <span
+      //       class="text-danger field-validation-valid"
+      //       data-valmsg-for="Email"
+      //       data-valmsg-replace="true"
+      //     ></span>
+      //   </div>
+      //   <div class="form-group">
+      //     <label class="control-label" for="Password">
+      //       &#x41F;&#x430;&#x440;&#x43E;&#x43B;&#x44C;
+      //     </label>
+      //     <input
+      //       class="form-control"
+      //       type="password"
+      //       data-val="true"
+      //       // data-val-required="&#x412;&#x43A;&#x430;&#x436;&#x456;&#x442;&#x44C; &#x43F;&#x430;&#x440;&#x43E;&#x43B;&#x44C;"
+      //       id="Password"
+      //       required
+      //       type="password"
+      //       name="password"
+      //       className={
+      //         error.password.length > 0
+      //           ? "is-invalid form-control"
+      //           : "form-control"
+      //       }
+      //       onChange={this.formObject}
+      //     />
+      //     {error.password.length > 0 && (
+      //       <span className="invalid-feedback">{error.password}</span>
+      //     )}
+      //     <span
+      //       class="text-danger field-validation-valid"
+      //       data-valmsg-for="Password"
+      //       data-valmsg-replace="true"
+      //     ></span>
+      //   </div>
+      //   <div class="d-flex align-items-end flex-column">
+      //     <div class="form-group mt-2">
+      //       <input
+      //         type="submit"
+      //         value="Вхід"
+      //         class="btn btn-warning px-5"
+      //       />
+      //     </div>
+      //   </div>
+      /* <input
                     name="__RequestVerificationToken"
                     type="hidden"
                     value="CfDJ8KrOnY28iqxBpAybiUNiWf-Scbvr4kHVtdJfuyI4xooDxP2gOj3Zo74xmdVLJYSP5hYJB5JQpZD_zjlVkoQM9juRgDGImQkk4Gor1Ht69VG6_S5fr5sKkq0-wieXXjnpvBGpHprhPN1lC8ZL6u_Dkys"
                   /> */
-            //     </form>
-            //   </div>
-            // </div>
+      //     </form>
+      //   </div>
+      // </div>
       //     </div>
       //   </div>
       // </div> */}
-
 
       <div className="maincontainer">
         <div className="container-fluid">
@@ -334,62 +329,66 @@ class Register extends Component {
                   <div className="row">
                     <div className="col-lg-10 col-xl-7 mx-auto">
                       <h3 className="display-4">Register</h3>
-                      
+
                       <Form
                         onSubmit={this.handleRegister}
                         ref={(c) => {
                           this.form = c;
                         }}
                       >
+                        {!this.state.successful && (
+                          <div>
+                            <div className="mb-3">
+                              <Input
+                                id="inputEmail"
+                                type="email"
+                                placeholder="Email address"
+                                autofocus=""
+                                value={this.state.username}
+                                onChange={this.onChangeInput}
+                                validations={[required, email]}
+                                className="form-control rounded-pill border-0 shadow-sm px-4"
+                              />
+                            </div>
 
-                       {!this.state.successful && (
-                         <div>
+                            <div className="mb-3">
+                              <Input
+                                id="inputPassword"
+                                type="password"
+                                placeholder="Password"
+                                value={this.state.password}
+                                onChange={this.onChangeInput}
+                                validations={[required, vpassword]}
+                                className="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
+                              />
+                            </div>
 
-                          <div className="mb-3">
-                            <Input
-                              id="inputEmail"
-                              type="email"
-                              placeholder="Email address"                            
-                              autofocus=""
-                              value={this.state.username}
-                              onChange={this.onChangeInput}
-                              validations={[required, email]}
-                              className="form-control rounded-pill border-0 shadow-sm px-4"
-                            />
+                            <div className="d-grid gap-2 mt-2">
+                              <button
+                                type="submit"
+                                disabled={this.state.loading}
+                                className="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
+                              >
+                                {this.state.loading ? (
+                                  <span className="spinner-border spinner-border-sm"></span>
+                                ) : (
+                                  <span>Sign up</span>
+                                )}
+                              </button>
+                            </div>
                           </div>
-
-                          <div className="mb-3">
-                            <Input
-                              id="inputPassword"
-                              type="password"
-                              placeholder="Password"
-                              value={this.state.password}
-                              onChange={this.onChangeInput}
-                              validations={[required, vpassword]}
-                              className="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
-                            />
-                          </div>                      
-
-
-                          <div className="d-grid gap-2 mt-2">
-                            <button
-                              type="submit"
-                              disabled={this.state.loading}
-                              className="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
-                            >
-                              {this.state.loading ? (
-                                <span className="spinner-border spinner-border-sm"></span>
-                              ) : (
-                                <span>Sign up</span>
-                              )}
-                            </button>
-                          </div>
-                        </div>                       
-                       )}
+                        )}
 
                         {message && (
                           <div className="form-group">
-                            <div className={ this.state.successful ? "alert alert-success" : "alert alert-danger" } role="alert">
+                            <div
+                              className={
+                                this.state.successful
+                                  ? "alert alert-success"
+                                  : "alert alert-danger"
+                              }
+                              role="alert"
+                            >
                               {message}
                             </div>
                           </div>
@@ -409,7 +408,6 @@ class Register extends Component {
           </div>
         </div>
       </div>
-
     );
   }
 }

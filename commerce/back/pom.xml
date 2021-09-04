@@ -144,14 +144,14 @@
 
                 <executions>
                     <execution>
-                        <id>Install node and npm</id>
+                        <id>install node and npm</id>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
                         <phase>generate-resources</phase>
                         <configuration>
-                            <nodeVersion>v10.15.2</nodeVersion>
-                            <npmVersion>6.4.1</npmVersion>
+                            <nodeVersion>v15.2.0</nodeVersion>
+                            <npmVersion>7.20.3</npmVersion>
                         </configuration>
                     </execution>
 

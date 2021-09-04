@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 //@NoArgsConstructor
 @ToString
-@Table(name="tblDetailNames")
+@Table(name="DetailNames")
 public class DetailName {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class DetailName {
     private LocalDateTime createdAt;
 
     @OneToMany
-    @JoinColumn(name="detailsNames_id")
+    @JoinColumn(name="detailName_id")
     private List<DetailValue> values;
 
     public DetailName() {
@@ -40,5 +40,10 @@ public class DetailName {
         this.name = name;
         IsDeleted = isDeleted;
         this.values = new ArrayList<>();
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

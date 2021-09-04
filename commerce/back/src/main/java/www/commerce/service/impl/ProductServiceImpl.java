@@ -1,10 +1,9 @@
 package www.commerce.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import www.commerce.dto.ProductDTO;
+import www.commerce.dto.product.ProductDTO;
 import www.commerce.entities.Product;
 import www.commerce.repositories.ProductRepository;
 import www.commerce.service.ProductService;

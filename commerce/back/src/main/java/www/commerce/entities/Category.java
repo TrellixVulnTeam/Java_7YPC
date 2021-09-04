@@ -2,8 +2,6 @@ package www.commerce.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import www.commerce.repositories.CatalogRepository;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ public class Category {
 
     @OneToMany
     @JoinColumn(name="category_id")
-    private List<FilterNames> filters;
+    private List<FilterName> filters;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -85,5 +83,17 @@ public class Category {
 
     public void setCatalog(Catalog catalog) {
         this.catalog = catalog;
+    }
+
+    public List<FilterName> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<FilterName> filters) {
+        this.filters = filters;
+    }
+
+    public int getCatalogId(){
+        return catalog.getId();
     }
 }
