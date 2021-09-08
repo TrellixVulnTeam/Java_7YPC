@@ -7,10 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Setter
-@Getter
 @AllArgsConstructor
-//@NoArgsConstructor
 @ToString
 @Table(name="DetailValues")
 public class DetailValue {
@@ -34,5 +31,35 @@ public class DetailValue {
         this.detailName_id = detailNameId;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public int getDetailNameId() {
+        return detailName_id;
+    }
+
+    public void setDetailNameId(int detailNameId) {
+        this.detailName_id = detailNameId;
+    }
 }

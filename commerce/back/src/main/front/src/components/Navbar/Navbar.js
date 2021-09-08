@@ -9,8 +9,8 @@ import "../Navbar/Navbar.css";
 
 const Navbar = () => {
   return (
-     <Fragment>
-       <Container>          
+    <Fragment>
+      <Container>
         <Row>
           <nav className="navbar navbar-expand-lg navbar-light bg">
             <div className="container-fluid">
@@ -34,7 +34,11 @@ const Navbar = () => {
               >
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                   <li className="nav-item">
-                    <Link className="nav-link active" aria-current="page" to="/">
+                    <Link
+                      className="nav-link active"
+                      aria-current="page"
+                      to="/"
+                    >
                       Home
                     </Link>
                   </li>
@@ -73,9 +77,9 @@ const Navbar = () => {
                     <Link
                       className="nav-link active"
                       aria-current="page"
-                      to="/dashboard"
+                      to="/upload"
                     >
-                      Dashboard
+                      Upload
                     </Link>
                   </li>
                 </ul>
@@ -83,8 +87,8 @@ const Navbar = () => {
             </div>
           </nav>
         </Row>
-       </Container>
-     </Fragment>
+      </Container>
+    </Fragment>
   );
 };
 

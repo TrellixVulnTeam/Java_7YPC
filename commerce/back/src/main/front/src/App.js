@@ -16,6 +16,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Banner from "./components/Banner/Banner";
 import UploadFiles from "./components/upload-files";
 import CatalogList from "./components/Catalog/CatalogList";
+import EditProduct from "./components/Product/edit-product-page";
 
 import history from "./history";
 import Register from "./components/Register/Register";
@@ -44,6 +45,7 @@ function App() {
           <Route path="/banner" exact component={() => <Banner />} />
           <Route path="/upload" exact component={() => <UploadFiles />} />
           <Route path="/catalogs" exact component={() => <CatalogList />} />
+          <Route path="/edit" exact component={() => <EditProduct />} />
         </Switch>
       </div>
     </BrowserRouter>
