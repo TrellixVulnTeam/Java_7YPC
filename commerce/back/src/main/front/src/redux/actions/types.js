@@ -1,0 +1,13 @@
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAIL = "REGISTER_FAIL";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const LOGOUT = "LOGOUT";
+
+export const SET_MESSAGE = "SET_MESSAGE";
+export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
+
+export const GET_CATALOG_LIST = "GET_CATALOG_LIST";
+export const CREATE_CATALOG = "CREATE_CATALOG";
+export const UPDATE_CATALOG = "UPDATE_CATALOG";
+export const DELETE_CATALOG = "DELETE_CATALOG";

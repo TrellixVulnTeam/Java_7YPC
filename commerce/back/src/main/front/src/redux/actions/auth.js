@@ -5,12 +5,13 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   SET_MESSAGE,
-} from "../types/types";
+} from "./types";
 
-import AuthService from "../../services/auth.service";
+import AuthService from "../services/auth-service";
 
 export const register = (username, email, password) => (dispatch) => {
-  return AuthService.register(username, email, password).then(
+  console.log(1);
+  return AuthService.registerUser(username, email, password).then(
     (response) => {
       dispatch({
         type: REGISTER_SUCCESS,
@@ -34,25 +35,24 @@ export const register = (username, email, password) => (dispatch) => {
       dispatch({
         type: REGISTER_FAIL,
       });
-
       dispatch({
         type: SET_MESSAGE,
         payload: message,
       });
-
       return Promise.reject();
     }
   );
 };
 
-export const login = (username, password) => (dispatch) => {
-  return AuthService.login(username, password).then(
+export const login = (usernameOrEmail, password) => (dispatch) => {
+  console.log("login");
+
+  return AuthService.loginUser(usernameOrEmail, password).then(
     (data) => {
       dispatch({
         type: LOGIN_SUCCESS,
         payload: { user: data },
       });
-
       return Promise.resolve();
     },
     (error) => {
@@ -78,9 +78,18 @@ export const login = (username, password) => (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  AuthService.logout();
+  AuthService.logoutUser();
 
   dispatch({
     type: LOGOUT,
   });
+};
+
+export const userAuth = (user, dispatch) => {
+  dispatch({
+    type: LOGIN_SUCCESS,
+    payload: user,
+  });
+
+  return Promise.resolve(user);
 };

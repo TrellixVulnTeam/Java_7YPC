@@ -1,74 +1,46 @@
 import React, { Fragment } from "react";
-import CatalogDataService from "../../services/catalog-service";
 import { connect } from "react-redux";
 
 import { getCatalogList } from "../../redux/actions/catalogs";
+import CatalogItem from "./CatalogItem";
+import { Row, Col, Container } from "react-bootstrap";
 
 class CatalogList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
-    this.refreshList = this.refreshList.bind(this);
-
-    this.state = {
-      catalogs: [],
-      currentCatalog: null,
-      currentIndex: -1,
-      searchTitle: "",
-    };
-  }
   componentDidMount() {
     this.props.getCatalogList();
   }
 
-  onChangeSearchTitle(e) {
-    const searchTitle = e.target.value;
-
-    this.setState({
-      searchTitle: searchTitle,
-    });
-  }
-
-  refreshList() {
-    this.retrieveCatalogs();
-    this.setState({
-      currentCatalog: null,
-      currentIndex: -1,
-    });
-  }
-
   render() {
-    const { currentIndex } = this.state;
     const { catalogs } = this.props;
-
     return (
-      <div className="list row container">
-        <div className="col-md-6">
-          <h4>Catalogs List</h4>
-
-          <ul className="list-group">
-            {catalogs &&
-              catalogs.map((catalog, index) => (
-                <li
-                  className={
-                    "list-group-item " +
-                    (index === currentIndex ? "active" : "")
-                  }
-                >
-                  {catalog.name}
-                </li>
-              ))}
-          </ul>
-        </div>
-      </div>
+      <Fragment>
+        <Container>
+          <Row xs={1} md={3} className="g-4">
+            {catalogs.length !== 0 ? (
+              catalogs.map((item) => {
+                return (
+                  <CatalogItem key={item.id} Id={item.id} Name={item.name} />
+                );
+              })
+            ) : (
+              <h2>Gatalogs not found</h2>
+            )}
+          </Row>
+        </Container>
+      </Fragment>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    catalogs: state.catalogReducer,
-  };
+const mapStateToProps = ({ catalogReducer }) => {
+  // console.log("mapStateToProps", catalogReducer);
+
+  const { catalogs, loading } = catalogReducer;
+  return { catalogs, loading };
 };
 
-export default connect(mapStateToProps, { getCatalogList })(CatalogList);
+const mapDispatchToProps = {
+  getCatalogList,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CatalogList);

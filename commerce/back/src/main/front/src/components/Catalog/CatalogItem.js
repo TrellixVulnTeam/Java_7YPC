@@ -1,59 +1,45 @@
 import React, { Fragment } from "react";
-import CatalogDataService from "../../services/catalog-service";
+import { Col, Card, Row } from "react-bootstrap";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fas, faGamepad } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+
+library.add(fas, faGamepad);
 
 export default class CatalogItem extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.getCatalog = this.getCatalog.bind(this);
-    
-
-    this.state = {
-      carrentCatalog: {
-        id: null,
-        name: "",
-      },
-      message: "",
-    };
-  }
-
-  componentDidMount() {
-    this.getCatalog(this.props.match.params.id);
-  }
-
-  getCatalog(id) {
-    CatalogDataService.get(id)
-      .then((response) => {
-        this.setState({
-          carrentCatalog: response.data,
-        });
-        console.log(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-
   render() {
-    const { carrentCatalog } = this.state;
+    const { Name } = this.props;
 
     return (
-      <div>        
-          <div className="edit-form">
-            <h4>Tutorial</h4>
-            <div className="form-group">
-              <label htmlFor="title">Title</label>
-              <input
-                type="text"
-                className="form-control"
-                id="title"
-                value={carrentCatalog.name}
+      <Fragment>
+        <Col>
+          <Link to="/upload" style={{ textDecoration: "none", color: "black" }}>
+            <Card
+              style={{
+                height: "230px",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+            >
+              <Card.Img
+                variant="top"
+                src="https://www.pngall.com/wp-content/uploads/4/Headphone-Transparent-PNG.png"
+                style={{ height: "150px", width: "150px" }}
               />
-            </div>
-          </div>        
-      </div>
+              <Card.Body>
+                <Card.Title>
+                  <FontAwesomeIcon
+                    icon="gamepad"
+                    style={{ marginRight: "8px" }}
+                  />
+                  {Name}
+                </Card.Title>
+              </Card.Body>
+            </Card>
+          </Link>
+        </Col>
+      </Fragment>
     );
   }
 }
-
-export default connect(null, null)(CatalogItem);

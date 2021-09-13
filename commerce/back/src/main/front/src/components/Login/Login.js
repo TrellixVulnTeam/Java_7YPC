@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../Login/Login.css";
-import axios from "axios";
 import { Redirect, withRouter } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,7 +8,6 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import history from "../../history";
 
 import Notification from "../Notification/Notofication";
-import { validation } from "./validation";
 
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -30,13 +28,24 @@ const required = (value) => {
   }
 };
 
+const email = (value) => {
+  if (!isEmail(value)) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        This is not a valid email.
+      </div>
+    );
+  }
+};
+
 export class Login extends Component {
   constructor(props) {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
+    this.onChangeInput = this.onChangeInput.bind(this);
 
     this.state = {
-      username: "",
+      usernameOrEmail: "",
       password: "",
       loading: false,
     };
@@ -54,7 +63,7 @@ export class Login extends Component {
     const { dispatch, history } = this.props;
 
     if (this.checkBtn.context._errors.length === 0) {
-      dispatch(login(this.state.username, this.state.password))
+      dispatch(login(this.state.usernameOrEmail, this.state.password))
         .then(() => {
           history.push("/home");
           window.location.reload();
@@ -65,30 +74,8 @@ export class Login extends Component {
           });
         });
     } else {
-      this.setState({
-        loading: false,
-      });
+      this.setState({ loading: false });
     }
-  }
-
-  handleDashboard() {
-    const token = localStorage.getItem("token");
-
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    const bodyParameters = {
-      key: "value",
-    };
-
-    axios
-      .post("http://localhost:8081/dashboard", bodyParameters, config)
-      .then((res) => {
-        if (res.data === "success") {
-          this.props.history.push("/dashboard");
-        } else alert("Authentication failure");
-      });
   }
 
   onChangeInput = (e) => {
@@ -102,11 +89,11 @@ export class Login extends Component {
     const { isLoggedIn, message } = this.props;
 
     if (isLoggedIn) {
-      return <Redirect to="/profile" />;
+      return <Redirect to="/home" />;
     }
 
     return (
-      <div classNameName="maincontainer">
+      <div className="maincontainer">
         <div className="container-fluid">
           <div className="row no-gutter">
             <div className="col-md-6 d-none d-md-flex bg-image"></div>
@@ -130,7 +117,8 @@ export class Login extends Component {
                             placeholder="Email address"
                             required=""
                             autofocus=""
-                            value={this.state.username}
+                            name="usernameOrEmail"
+                            value={this.state.usernameOrEmail}
                             onChange={this.onChangeInput}
                             validations={[required]}
                             className="form-control rounded-pill border-0 shadow-sm px-4"
@@ -142,6 +130,7 @@ export class Login extends Component {
                             type="password"
                             placeholder="Password"
                             required=""
+                            name="password"
                             value={this.state.password}
                             onChange={this.onChangeInput}
                             validations={[required]}
@@ -157,7 +146,7 @@ export class Login extends Component {
                             {this.state.loading ? (
                               <span className="spinner-border spinner-border-sm"></span>
                             ) : (
-                              <span>Sign in</span>
+                              <span>Login</span>
                             )}
                           </button>
                         </div>

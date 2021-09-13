@@ -17,6 +17,8 @@ import Banner from "./components/Banner/Banner";
 import UploadFiles from "./components/upload-files";
 import CatalogList from "./components/Catalog/CatalogList";
 import EditProduct from "./components/Product/edit-product-page";
+import Profile from "./components/Profile/Profile";
+import BoardUser from "./components/Home/BoardUser";
 
 import history from "./history";
 import Register from "./components/Register/Register";
@@ -24,21 +26,13 @@ import Register from "./components/Register/Register";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/Home/Home";
 
-//import interseptors from "./interseptors/Interceptors";
-
 function App() {
-  // const [token, setToken] = useState();
-
-  // if (!token) {
-  //   return <Login setToken={setToken} />;
-  // }
-
   return (
     <BrowserRouter history={history}>
       <Navbar />
       <div>
         <Switch>
-          <Route path="/" exact component={() => <Home />} />
+          <Route path={["/", "/home"]} exact component={() => <Home />} />
           <Route exact path="/login" component={() => <Login />} />
           <Route path="/dashboard" exact component={() => <Dashboard />} />
           <Route path="/register" exact component={() => <Register />} />
@@ -46,6 +40,8 @@ function App() {
           <Route path="/upload" exact component={() => <UploadFiles />} />
           <Route path="/catalogs" exact component={() => <CatalogList />} />
           <Route path="/edit" exact component={() => <EditProduct />} />
+          <Route path="/profile" exact component={() => <Profile />} />
+          <Route path="/user" exact component={() => <BoardUser />} />
         </Switch>
       </div>
     </BrowserRouter>

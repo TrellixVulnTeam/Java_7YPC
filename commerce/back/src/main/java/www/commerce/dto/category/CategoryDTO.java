@@ -10,6 +10,7 @@ import www.commerce.dto.filter.FilterValueDTO;
 import www.commerce.dto.product.ProductDTO;
 import www.commerce.entities.Catalog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDTO {
@@ -28,16 +29,22 @@ public class CategoryDTO {
         this.id = id;
         this.name = name;
         this.catalogId = catalogId;
+        this.filters = new ArrayList<>();
+        this.products = new ArrayList<>();
     }
 
     public CategoryDTO(int id, String name) {
         this.id = id;
         this.name = name;
+        this.filters = new ArrayList<>();
+        this.products = new ArrayList<>();
     }
 
 
 
     public CategoryDTO() {
+        this.filters = new ArrayList<>();
+        this.products = new ArrayList<>();
     }
 
     public int getId() {

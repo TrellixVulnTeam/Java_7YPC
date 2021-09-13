@@ -4,9 +4,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-} from "../types/types";
+} from "../actions/types";
 
-const user = JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(localStorage.getItem(""));
 
 const initialState = user
   ? { isLoggedIn: true, user }

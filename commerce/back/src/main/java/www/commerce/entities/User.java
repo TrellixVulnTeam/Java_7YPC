@@ -30,18 +30,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Size(max = 40)
+//    @NotBlank
+//    @Size(max = 40)
     private String username;
 
     @NaturalId
-    @NotBlank
-    @Size(max = 40)
+//    @NotBlank
+//    @Size(max = 40)
     @Email
     private String email;
 
-    @NotBlank
-    @Size(max = 100)
+//    @NotBlank
+//    @Size(max = 100)
     private String password;
 
     private String firstName;

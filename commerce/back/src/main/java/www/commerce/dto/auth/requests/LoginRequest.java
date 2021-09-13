@@ -7,10 +7,8 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class LoginRequest {
 
-    @NotBlank
     private String usernameOrEmail;
 
-    @NotBlank
     private String password;
 
     public String getUsernameOrEmail() {
@@ -29,4 +27,8 @@ public class LoginRequest {
         this.password = password;
     }
 
+    public LoginRequest( String usernameOrEmail,  String password) {
+        this.usernameOrEmail = usernameOrEmail;
+        this.password = password;
+    }
 }

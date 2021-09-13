@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import www.commerce.dto.catalog.CatalogDTO;
+import www.commerce.dto.catalog.CatalogSlimDTO;
 import www.commerce.entities.Catalog;
 import www.commerce.entities.Category;
 import www.commerce.repositories.CatalogRepository;
@@ -33,6 +34,18 @@ public class CatalogController {
                 HttpStatus.OK
         );
     }
+
+    @GetMapping("/catalogs-slim")
+    ResponseEntity<List<CatalogSlimDTO>> all_slim() {
+        return new ResponseEntity<List<CatalogSlimDTO>>(
+                mapstructMapper.catalogsToCatalogsSlimDTO(
+                        repository.findAll()
+                ),
+                HttpStatus.OK
+        );
+    }
+
+
 
     @PostMapping("/catalogs")
     ResponseEntity<Void> newCatalog(@RequestBody CatalogDTO newCatalog) {

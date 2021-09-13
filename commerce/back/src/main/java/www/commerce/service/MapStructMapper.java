@@ -33,6 +33,7 @@ public interface MapStructMapper {
     CatalogSlimDTO catalogToCatalogSlimDTO(Catalog catalog);
     Catalog catalogSlimDTOToCatalog(CatalogSlimDTO catalogSlimDTO);
     List<CatalogDTO> catalogsToCatalogDTO(List<Catalog> catalogs);
+    List<CatalogSlimDTO> catalogsToCatalogsSlimDTO(List<Catalog> catalogs);
     //images
     ImageProductDTO imageToImageDTO(Product_Images image);
     Product_Images imageDTOToImage(ImageProductDTO image);

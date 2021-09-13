@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
-import UserService from "../../services/user.service.js";
+import UserService from "../../redux/services/user-service";
+import CatalogList from "../Catalog/CatalogList";
 
 import ItemCard from "../Product/product-cart";
 
@@ -14,21 +15,30 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    UserService.getPublicContent().then(
-      (response) => {
-        this.setState({
-          content: response.data,
-        });
-      },
-      (error) => {
-        this.setState({
-          content:
-            (error.response && error.response.data) ||
-            error.message ||
-            error.toString(),
-        });
-      }
-    );
+    // UserService.getPublicContent().then(
+    //   (response) => {
+    //     this.setState({
+    //       content: response.data,
+    //     });
+    //   },
+    //   (error) => {
+    //     this.setState({
+    //       content:
+    //         (error.response && error.response.data) ||
+    //         error.message ||
+    //         error.toString(),
+    //     });
+    //   }
+    // );
+    // let jwt = localStorage.getItem("accessToken");
+    // let jwtData = jwt.split(".")[1];
+    // let decodedJwtJsonData = window.atob(jwtData);
+    // let decodedJwtData = JSON.parse(decodedJwtJsonData);
+    // let isAdmin = decodedJwtData.admin;
+    // console.log("jwtData: " + jwtData);
+    // console.log("decodedJwtJsonData: " + decodedJwtJsonData);
+    // console.log("decodedJwtData: " + decodedJwtData);
+    // console.log("Is admin: " + isAdmin);
   }
 
   render() {
@@ -42,7 +52,8 @@ export default class Home extends Component {
           <h3>{this.state.content}</h3>
         </header>
 
-        <ItemCard item={item} />
+        <CatalogList />
+        {/* <ItemCard item={item} /> */}
       </div>
     );
   }
