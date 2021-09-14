@@ -10,6 +10,13 @@ class CatalogService {
       return response.data;
     });
   }
+
+  getCatalogCategory(id) {
+    return axios.get(API_URL + `catalogs/${id}`).then((response) => {
+      // console.log(response.data);
+      return response.data;
+    });
+  }
 }
 
 export default new CatalogService();

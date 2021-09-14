@@ -7,17 +7,14 @@ import { Link } from "react-router-dom";
 
 library.add(fas, faGamepad);
 
-export default class CatalogItem extends React.Component {
+export default class ProductItem extends React.Component {
   render() {
-    const { Name, Id } = this.props;
+    const { Name } = this.props;
 
     return (
       <Fragment>
         <Col>
-          <Link
-            to={`/catalog/categories/${Id}`}
-            style={{ textDecoration: "none", color: "black" }}
-          >
+          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
             <Card
               style={{
                 height: "230px",

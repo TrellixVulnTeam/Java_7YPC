@@ -14,7 +14,7 @@ import { userAuth } from "./redux/actions/auth";
 let token = localStorage.getItem("accessToken");
 if (token != null && token != "") {
   userAuth(token, store.dispatch).then(() => {
-    console.log("user login");
+    // console.log("user login");
   });
 }
 

@@ -45,8 +45,6 @@ public class CatalogController {
         );
     }
 
-
-
     @PostMapping("/catalogs")
     ResponseEntity<Void> newCatalog(@RequestBody CatalogDTO newCatalog) {
         repository.save(
@@ -65,6 +63,9 @@ public class CatalogController {
                 HttpStatus.OK
         );
     }
+
+
+
 
     @PutMapping("/catalogs/{id}")
     ResponseEntity<Void> updateCatalog(@RequestBody CatalogDTO newCatalog, @PathVariable int id) {

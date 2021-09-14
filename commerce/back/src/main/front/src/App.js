@@ -25,6 +25,8 @@ import Register from "./components/Register/Register";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/Home/Home";
+import CategoryList from "./components/Category/CategoryList";
+import ProductList from "./components/Product/ProductList";
 
 function App() {
   return (
@@ -39,6 +41,12 @@ function App() {
           <Route path="/banner" exact component={() => <Banner />} />
           <Route path="/upload" exact component={() => <UploadFiles />} />
           <Route path="/catalogs" exact component={() => <CatalogList />} />
+          <Route
+            path="/catalog/categories/:id"
+            exact
+            component={CategoryList}
+          />
+          <Route path="/category/products/:id" exact component={ProductList} />
           <Route path="/edit" exact component={() => <EditProduct />} />
           <Route path="/profile" exact component={() => <Profile />} />
           <Route path="/user" exact component={() => <BoardUser />} />

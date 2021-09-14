@@ -1,15 +1,22 @@
-import { GET_CATALOG_LIST } from "./types";
+import { GET_CATALOG_LIST, GET_CATALOG_CATEGORY_LIST, WAIT } from "./types";
 import CatalogService from "../services/catalog-service";
 
 export const getCatalogList = () => async (dispatch) => {
-  // try {
   const res = await CatalogService.getCatalogs();
-  // console.log(res);
   dispatch({
     type: GET_CATALOG_LIST,
     payload: res,
   });
-  // } catch (err) {
-  //   console.log(err);
-  // }
+};
+
+export const getCatalogCategory = (id) => async (dispatch) => {
+  dispatch({
+    type: WAIT,
+  });
+
+  const res = await CatalogService.getCatalogCategory(id);
+  dispatch({
+    type: GET_CATALOG_CATEGORY_LIST,
+    payload: res,
+  });
 };

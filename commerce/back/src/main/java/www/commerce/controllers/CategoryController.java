@@ -50,6 +50,7 @@ public class CategoryController {
     }
 
 
+
     @GetMapping("/categories/{id}")
     ResponseEntity<CategoryDTO> one(@PathVariable int id) {
         return new ResponseEntity<>(
