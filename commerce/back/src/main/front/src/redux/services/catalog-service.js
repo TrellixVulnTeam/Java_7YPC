@@ -17,6 +17,13 @@ class CatalogService {
       return response.data;
     });
   }
+
+  addNewCatalog(name) {
+    return axios.post(API_URL + `catalogs`, { name }).then((response) => {
+      // console.log("post " + response.data);
+      return response.data;
+    });
+  }
 }
 
 export default new CatalogService();

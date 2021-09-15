@@ -1,61 +1,59 @@
-import React, { Fragment } from "react";
-import { connect } from "react-redux";
+import React, { Fragment, useState, useEffect } from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
 
 import { getCatalogList } from "../../redux/actions/catalogs";
 import CatalogItem from "./CatalogItem";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import Load from "../Loader/Loader";
+import MyModal from "../../components/Modal/MyModal";
+import AddForm from "../FormAdd/AddForm";
 
-class CatalogList extends React.Component {
-  componentDidMount() {
-    // setTimeout(() => {}, 5000);
+const CatalogList = () => {
+  const [modal, setModal] = useState(false);
 
-    this.props.getCatalogList();
-  }
+  const catalog = useSelector((state) => state.catalogReducer);
 
-  render() {
-    const { catalogs, loading } = this.props;
-    return (
-      <Fragment>
-        <Container>
-          {loading ? (
-            <Load />
-          ) : (
-            <Col>
-              <h1>CATALOGS</h1>
+  const dispatch = useDispatch();
 
-              <Row xs={1} md={3} className="g-4">
-                {catalogs !== null && catalogs.length !== 0 ? (
-                  catalogs.map((item) => {
-                    return (
-                      <CatalogItem
-                        key={item.id}
-                        Id={item.id}
-                        Name={item.name}
-                      />
-                    );
-                  })
-                ) : (
-                  <h2>Gatalogs not found</h2>
-                )}
-              </Row>
-            </Col>
-          )}
-        </Container>
-      </Fragment>
-    );
-  }
-}
+  const createCatalog = () => {
+    setModal(false);
+  };
 
-const mapStateToProps = ({ catalogReducer }) => {
-  // console.log("mapStateToProps", catalogReducer);
+  useEffect(() => {
+    dispatch(getCatalogList());
+  }, []);
 
-  const { catalogs, loading } = catalogReducer;
-  return { catalogs, loading };
+  return (
+    <Fragment>
+      <Container>
+        {catalog.loading ? (
+          <Load />
+        ) : (
+          <Col>
+            <h1>CATALOGS</h1>
+            <Button variant="secondary" onClick={() => setModal(true)}>
+              Add catalog
+            </Button>
+            <hr style={{ margin: "15px 0" }} />
+            <Row xs={1} md={3} className="g-4">
+              {catalog.catalogs !== null && catalog.catalogs.length !== 0 ? (
+                catalog.catalogs.map((item) => {
+                  return (
+                    <CatalogItem key={item.id} Id={item.id} Name={item.name} />
+                  );
+                })
+              ) : (
+                <h2>Gatalogs not found</h2>
+              )}
+            </Row>
+          </Col>
+        )}
+        <MyModal visible={modal} setVisible={setModal}>
+          <AddForm dispatch={dispatch} create={createCatalog} />
+        </MyModal>
+      </Container>
+    </Fragment>
+  );
 };
 
-const mapDispatchToProps = {
-  getCatalogList,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CatalogList);
+export default CatalogList;

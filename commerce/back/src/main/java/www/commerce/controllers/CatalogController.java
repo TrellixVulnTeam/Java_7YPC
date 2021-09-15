@@ -46,12 +46,19 @@ public class CatalogController {
     }
 
     @PostMapping("/catalogs")
-    ResponseEntity<Void> newCatalog(@RequestBody CatalogDTO newCatalog) {
+    ResponseEntity<CatalogSlimDTO> newCatalog(@RequestBody CatalogDTO newCatalog) {
         repository.save(
                 mapstructMapper.catalogDTOToCatalog(newCatalog)
         );
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                mapstructMapper.catalogToCatalogSlimDTO(
+                        repository.findByName(newCatalog.getName())
+                ),
+                HttpStatus.OK
+        );
+
+//        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/catalogs/{id}")

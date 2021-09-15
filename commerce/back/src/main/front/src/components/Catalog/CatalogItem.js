@@ -1,48 +1,76 @@
-import React, { Fragment } from "react";
-import { Col, Card, Row } from "react-bootstrap";
+import React, { Fragment, useState } from "react";
+import { Col, Card, Row, Button } from "react-bootstrap";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fas, faGamepad } from "@fortawesome/free-solid-svg-icons";
+import {
+  fas,
+  faGamepad,
+  faEdit,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-library.add(fas, faGamepad);
+library.add(fas, faGamepad, faEdit, faTrash);
 
-export default class CatalogItem extends React.Component {
-  render() {
-    const { Name, Id } = this.props;
+const CatalogItem = (props) => {
+  const { Name, Id } = props;
+  const [style, setStyle] = useState({
+    display: "none",
+  });
 
-    return (
-      <Fragment>
-        <Col>
-          <Link
-            to={`/catalog/categories/${Id}`}
-            style={{ textDecoration: "none", color: "black" }}
+  return (
+    <Fragment>
+      <Col>
+        <Link
+          to={`/catalog/categories/${Id}`}
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <Card
+            style={{
+              height: "230px",
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+            onMouseEnter={(e) => {
+              setStyle({ display: "block" });
+            }}
+            onMouseLeave={(e) => {
+              setStyle({ display: "none" });
+            }}
           >
-            <Card
-              style={{
-                height: "230px",
-                alignItems: "center",
-                cursor: "pointer",
-              }}
-            >
-              <Card.Img
-                variant="top"
-                src="https://www.pngall.com/wp-content/uploads/4/Headphone-Transparent-PNG.png"
-                style={{ height: "150px", width: "150px" }}
-              />
-              <Card.Body>
-                <Card.Title>
-                  <FontAwesomeIcon
-                    icon="gamepad"
-                    style={{ marginRight: "8px" }}
-                  />
-                  {Name}
-                </Card.Title>
-              </Card.Body>
-            </Card>
-          </Link>
-        </Col>
-      </Fragment>
-    );
-  }
-}
+            <Card.Img
+              variant="top"
+              src="https://www.pngall.com/wp-content/uploads/4/Headphone-Transparent-PNG.png"
+              style={{ height: "150px", width: "150px" }}
+            />
+            <Card.Body>
+              <Card.Title>
+                <FontAwesomeIcon
+                  icon="gamepad"
+                  style={{ marginRight: "8px" }}
+                />
+                {Name}
+              </Card.Title>
+
+              <div style={style}>
+                <div style={{ position: "absolute", top: "2px", right: "2px" }}>
+                  <Button
+                    variant="outline-primary"
+                    style={{ marginRight: "2px" }}
+                  >
+                    <FontAwesomeIcon icon="edit" />
+                  </Button>
+                  <Button variant="outline-danger">
+                    <FontAwesomeIcon icon="trash" />
+                  </Button>
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
+        </Link>
+      </Col>
+    </Fragment>
+  );
+};
+
+export default CatalogItem;

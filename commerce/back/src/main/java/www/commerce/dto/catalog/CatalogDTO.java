@@ -35,4 +35,8 @@ public class CatalogDTO {
     public CatalogDTO() {
         this.categories = new ArrayList<>();
     }
+
+    public String getName() {
+        return name;
+    }
 }

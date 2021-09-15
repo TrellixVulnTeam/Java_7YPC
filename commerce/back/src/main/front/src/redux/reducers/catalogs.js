@@ -41,7 +41,11 @@ const catalogReducer = (state = initialState, action) => {
       };
 
     case CREATE_CATALOG:
-      return [...state, payload];
+      return {
+        ...state,
+        loading: false,
+        catalogs: [...state.catalogs, payload],
+      };
 
     case UPDATE_CATALOG:
       return state.map((catalog) => {

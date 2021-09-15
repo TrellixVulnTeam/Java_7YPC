@@ -8,4 +8,6 @@ public interface CatalogRepository extends JpaRepository<Catalog, Integer> {
 //   static Catalog getById(int id) {
 //      return CatalogRepository.findById(id);
 //   }
+
+    Catalog findByName(String name);
 }
