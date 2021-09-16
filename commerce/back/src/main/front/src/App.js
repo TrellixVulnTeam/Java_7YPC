@@ -27,6 +27,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/Home/Home";
 import CategoryList from "./components/Category/CategoryList";
 import ProductList from "./components/Product/ProductList";
+import ProductView from "./components/Product/ProductView";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <Route path="/edit" exact component={() => <EditProduct />} />
           <Route path="/profile" exact component={() => <Profile />} />
           <Route path="/user" exact component={() => <BoardUser />} />
+          <Route path="/product/view/:id" exact component={ProductView} />
         </Switch>
       </div>
     </BrowserRouter>

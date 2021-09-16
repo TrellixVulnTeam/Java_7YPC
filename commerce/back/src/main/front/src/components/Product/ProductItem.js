@@ -9,12 +9,15 @@ library.add(fas, faGamepad);
 
 export default class ProductItem extends React.Component {
   render() {
-    const { Name } = this.props;
+    const { Name, Id } = this.props;
 
     return (
       <Fragment>
         <Col>
-          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+          <Link
+            to={`/product/view/${Id}`}
+            style={{ textDecoration: "none", color: "black" }}
+          >
             <Card
               style={{
                 height: "230px",

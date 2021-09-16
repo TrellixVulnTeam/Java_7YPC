@@ -140,4 +140,8 @@ public class Product {
     public void setImages(List<Product_Images> images) {
         this.images = images;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

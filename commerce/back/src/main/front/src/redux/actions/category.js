@@ -7,6 +7,8 @@ export const getCategory = (id) => async (dispatch) => {
   });
 
   const res = await CategoryService.getCategory(id);
+  console.log("res >>" + res);
+
   dispatch({
     type: GET_CATEGORY,
     payload: res,

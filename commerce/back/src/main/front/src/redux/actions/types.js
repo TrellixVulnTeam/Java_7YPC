@@ -18,3 +18,5 @@ export const GET_CATEGORY_LIST = "GET_CATEGORY_LIST";
 export const GET_CATEGORY = "GET_CATEGORY";
 
 export const WAIT = "WAIT";
+
+export const GET_PRODUCT = "GET_PRODUCT";
