@@ -3,6 +3,8 @@ import {
   GET_CATALOG_CATEGORY_LIST,
   WAIT,
   CREATE_CATALOG,
+  DELETE_CATALOG,
+  GET_CATALOG,
 } from "./types";
 import CatalogService from "../services/catalog-service";
 
@@ -39,4 +41,21 @@ export const addNewCatalog = (name) => async (dispatch) => {
   } catch (err) {
     return Promise.reject(err);
   }
+};
+
+export const deleteCatalog = (id) => async (dispatch) => {
+  // console.log("delete");
+  const res = await CatalogService.deleteCatalog(id);
+  dispatch({
+    type: DELETE_CATALOG,
+    payload: id,
+  });
+};
+
+export const getCatalog = (id) => async (dispatch) => {
+  const res = await CatalogService.getCatalogByID(id);
+  dispatch({
+    type: GET_CATALOG,
+    payload: res,
+  });
 };

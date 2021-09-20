@@ -6,6 +6,7 @@ import {
   DELETE_ALL_CATALOGS,
   GET_CATALOG_CATEGORY_LIST,
   WAIT,
+  GET_CATALOG,
 } from "../actions/types";
 
 const initialState = {
@@ -20,7 +21,6 @@ const catalogReducer = (state = initialState, action) => {
 
   switch (type) {
     case GET_CATALOG_LIST:
-      // console.log("GET_CATALOG_LIST");
       return {
         ...state,
         loading: false,
@@ -60,7 +60,18 @@ const catalogReducer = (state = initialState, action) => {
       });
 
     case DELETE_CATALOG:
-      return state.filter(({ id }) => id !== payload.id);
+      return {
+        ...state,
+        loading: false,
+        catalogs: state.catalogs.filter((c) => c.id !== payload),
+      };
+
+    case GET_CATALOG:
+      return {
+        ...state,
+        loading: false,
+        curretnCatalog: payload,
+      };
 
     default:
       return state;

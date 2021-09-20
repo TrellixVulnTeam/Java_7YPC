@@ -71,7 +71,15 @@ public class CatalogController {
         );
     }
 
-
+    @GetMapping("/catalog/{id}")
+    ResponseEntity<CatalogSlimDTO> getById(@PathVariable int id) {
+        return new ResponseEntity<>(
+                mapstructMapper.catalogToCatalogSlimDTO(
+                        repository.findById(id).get()
+                ),
+                HttpStatus.OK
+        );
+    }
 
 
     @PutMapping("/catalogs/{id}")
@@ -88,6 +96,6 @@ public class CatalogController {
 
     @DeleteMapping("/catalogs/{id}")
     void deleteCatalog(@PathVariable int id) {
-        repository.deleteById( id);
+        repository.deleteById(id);
     }
 }

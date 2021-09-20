@@ -7,19 +7,6 @@ import { addNewCatalog } from "../../redux/actions/catalogs";
 const AddForm = ({ dispatch, create }) => {
   const [catalog, setCatalog] = useState({ title: "" });
 
-  //   const dispatch = useDispatch();
-
-  //   function addNewCatalog(e) {
-  //     // e.preventDefault();
-  //     console.log(catalog.title);
-
-  //     // dispatch(addNewCatalog(catalog.title));
-
-  //     setCatalog({
-  //       title: "",
-  //     });
-  //   }
-
   return (
     <InputGroup className="mb-3">
       <FormControl
@@ -37,7 +24,6 @@ const AddForm = ({ dispatch, create }) => {
         type="submit"
         variant="outline-secondary"
         id="button-addon2"
-        // onClick={addNewCatalog}
         onClick={() => {
           dispatch(addNewCatalog(catalog.title));
           create();
@@ -50,20 +36,3 @@ const AddForm = ({ dispatch, create }) => {
 };
 
 export default AddForm;
-
-{
-  /* <Modal.Dialog>
-<Modal.Header closeButton>
-  <Modal.Title>Modal title</Modal.Title>
-</Modal.Header>
-
-<Modal.Body>
-  <p>Modal body text goes here.</p>
-</Modal.Body>
-
-<Modal.Footer>
-  <Button variant="secondary">Close</Button>
-  <Button variant="primary">Save changes</Button>
-</Modal.Footer>
-</Modal.Dialog> */
-}

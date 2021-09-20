@@ -24,6 +24,19 @@ class CatalogService {
       return response.data;
     });
   }
+
+  deleteCatalog(id) {
+    return axios.delete(API_URL + `catalogs/${id}`).then((response) => {
+      // console.log("delete " + response.data);
+      // return response.data;
+    });
+  }
+
+  getCatalogByID(id) {
+    return axios.get(API_URL + `catalog/${id}`).then((response) => {
+      return response.data;
+    });
+  }
 }
 
 export default new CatalogService();

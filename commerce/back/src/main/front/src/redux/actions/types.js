@@ -8,6 +8,7 @@ export const SET_MESSAGE = "SET_MESSAGE";
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
 
 export const GET_CATALOG_LIST = "GET_CATALOG_LIST";
+export const GET_CATALOG = "GET_CATALOG";
 export const CREATE_CATALOG = "CREATE_CATALOG";
 export const UPDATE_CATALOG = "UPDATE_CATALOG";
 export const DELETE_CATALOG = "DELETE_CATALOG";

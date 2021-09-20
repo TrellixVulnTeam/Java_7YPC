@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Col, Card, Row, Button } from "react-bootstrap";
+import { Col, Card, Button } from "react-bootstrap";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,6 +17,11 @@ const CatalogItem = (props) => {
   const [style, setStyle] = useState({
     display: "none",
   });
+
+  const deleteItem = (e, id) => {
+    e.preventDefault();
+    props.delete(id);
+  };
 
   return (
     <Fragment>
@@ -45,10 +50,10 @@ const CatalogItem = (props) => {
             />
             <Card.Body>
               <Card.Title>
-                <FontAwesomeIcon
+                {/* <FontAwesomeIcon
                   icon="gamepad"
                   style={{ marginRight: "8px" }}
-                />
+                /> */}
                 {Name}
               </Card.Title>
 
@@ -60,7 +65,10 @@ const CatalogItem = (props) => {
                   >
                     <FontAwesomeIcon icon="edit" />
                   </Button>
-                  <Button variant="outline-danger">
+                  <Button
+                    variant="outline-danger"
+                    onClick={(e) => deleteItem(e, Id)}
+                  >
                     <FontAwesomeIcon icon="trash" />
                   </Button>
                 </div>

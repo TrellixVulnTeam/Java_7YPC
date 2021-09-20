@@ -7,9 +7,14 @@ import { Row, Col, Container, Button } from "react-bootstrap";
 import Load from "../Loader/Loader";
 import MyModal from "../../components/Modal/MyModal";
 import AddForm from "../FormAdd/AddForm";
-
+import DeleteForm from "../FormDelete/DeleteForm";
+import EditForm from "../FormEdit/EditForm";
 const CatalogList = () => {
   const [modal, setModal] = useState(false);
+  const [isDel, setIsDel] = useState(false);
+  const [isAdd, setIsAdd] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [removeItem, setRemoveItem] = useState();
 
   const catalog = useSelector((state) => state.catalogReducer);
 
@@ -17,6 +22,17 @@ const CatalogList = () => {
 
   const createCatalog = () => {
     setModal(false);
+    setIsAdd(false);
+  };
+
+  const closeDel = () => {
+    setModal(false);
+    setIsDel(false);
+  };
+  const removeCatalog = (item) => {
+    setIsDel(true);
+    setModal(true);
+    setRemoveItem(item);
   };
 
   useEffect(() => {
@@ -31,7 +47,13 @@ const CatalogList = () => {
         ) : (
           <Col>
             <h1>CATALOGS</h1>
-            <Button variant="secondary" onClick={() => setModal(true)}>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setModal(true);
+                setIsAdd(true);
+              }}
+            >
               Add catalog
             </Button>
             <hr style={{ margin: "15px 0" }} />
@@ -39,7 +61,12 @@ const CatalogList = () => {
               {catalog.catalogs !== null && catalog.catalogs.length !== 0 ? (
                 catalog.catalogs.map((item) => {
                   return (
-                    <CatalogItem key={item.id} Id={item.id} Name={item.name} />
+                    <CatalogItem
+                      key={item.id}
+                      Id={item.id}
+                      Name={item.name}
+                      delete={removeCatalog}
+                    />
                   );
                 })
               ) : (
@@ -49,7 +76,15 @@ const CatalogList = () => {
           </Col>
         )}
         <MyModal visible={modal} setVisible={setModal}>
-          <AddForm dispatch={dispatch} create={createCatalog} />
+          {isDel && (
+            <DeleteForm
+              dispatch={dispatch}
+              item={removeItem}
+              close={closeDel}
+            />
+          )}
+          {isAdd && <AddForm dispatch={dispatch} create={createCatalog} />}
+          {isEdit && <EditForm />}
         </MyModal>
       </Container>
     </Fragment>

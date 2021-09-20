@@ -16,8 +16,6 @@ const ProductView = (props) => {
   useEffect(() => {
     let id = props.match.params.id;
     dispatch(getProduct(id));
-
-    // setMainImage(`${url}${product.products.images[0].name}`);
   }, []);
 
   const click = () => {
@@ -40,46 +38,37 @@ const ProductView = (props) => {
               <div className="col-md-6 border-end">
                 <div className="d-flex flex-column justify-content-center">
                   <div className="main_image">
-                    <img
-                      src={mainImage}
-                      onError={(event) => {
-                        event.target.src = `${url}${product.products.images[0].name}`;
-                        event.onerror = null;
-                      }}
-                      id="main_product_image"
-                      width="350"
-                    />
+                    {product.products.images ? (
+                      <img
+                        src={mainImage}
+                        onError={(event) => {
+                          event.target.src = `${url}${product.products.images[0].name}`;
+                          event.onerror = null;
+                        }}
+                        id="main_product_image"
+                        width="350"
+                      />
+                    ) : (
+                      <img
+                        src="https://ang-projects.com/public/uploads/contents/testi-no-image.png"
+                        id="main_product_image"
+                        width="350"
+                      />
+                    )}
                   </div>
                   <div className="thumbnail_images">
                     <ul id="thumbnail">
-                      <li>
-                        <img
-                          onClick={changeMainImage}
-                          src={`${url}${product.products.images[0].name}`}
-                          width="70"
-                        />
-                      </li>
-                      <li>
-                        <img
-                          onClick={changeMainImage}
-                          src={`${url}${product.products.images[1].name}`}
-                          width="70"
-                        />
-                      </li>
-                      <li>
-                        <img
-                          onClick={changeMainImage}
-                          src="https://i.imgur.com/L7hFD8X.jpg"
-                          width="70"
-                        />
-                      </li>
-                      <li>
-                        <img
-                          onClick={changeMainImage}
-                          src="https://i.imgur.com/6ZufmNS.jpg"
-                          width="70"
-                        />
-                      </li>
+                      {product.products.images.map((img, index) => {
+                        return (
+                          <li key={index}>
+                            <img
+                              onClick={changeMainImage}
+                              src={`${url}${img.name}`}
+                              width="70"
+                            />
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 </div>
