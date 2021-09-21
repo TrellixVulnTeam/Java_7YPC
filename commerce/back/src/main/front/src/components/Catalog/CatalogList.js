@@ -65,6 +65,7 @@ const CatalogList = () => {
                       key={item.id}
                       Id={item.id}
                       Name={item.name}
+                      Image={item.image}
                       delete={removeCatalog}
                     />
                   );

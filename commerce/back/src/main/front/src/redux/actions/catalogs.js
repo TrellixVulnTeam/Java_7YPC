@@ -10,6 +10,7 @@ import CatalogService from "../services/catalog-service";
 
 export const getCatalogList = () => async (dispatch) => {
   const res = await CatalogService.getCatalogs();
+  console.log(res);
   dispatch({
     type: GET_CATALOG_LIST,
     payload: res,
@@ -28,9 +29,10 @@ export const getCatalogCategory = (id) => async (dispatch) => {
   });
 };
 
-export const addNewCatalog = (name) => async (dispatch) => {
+export const addNewCatalog = (name, file) => async (dispatch) => {
   try {
-    const res = await CatalogService.addNewCatalog(name);
+    // const res = await CatalogService.addNewCatalog(name);
+    const res = await CatalogService.addCatalog(name, file);
 
     dispatch({
       type: CREATE_CATALOG,

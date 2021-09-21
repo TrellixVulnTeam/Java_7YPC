@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import www.commerce.dto.file.FileInfo;
+import www.commerce.entities.Catalog;
+import www.commerce.entities.Catalog_Images;
 import www.commerce.entities.Product_Images;
+import www.commerce.repositories.CatalogImageRep;
+import www.commerce.repositories.CatalogRepository;
 import www.commerce.repositories.FileRepository;
 import www.commerce.dto.auth.response.MessageResponse;
 import www.commerce.service.FilesStorageService;
@@ -29,11 +33,16 @@ public class FilesController {
 
     private FileRepository fileRepository;
     private MapStructMapper mapstructMapper;
+    private CatalogImageRep catalogImageRep;
+
+    private  CatalogRepository repository;
 
 
-    public FilesController(MapStructMapper mapstructMapper, FileRepository fileRepository) {
+    public FilesController(MapStructMapper mapstructMapper, FileRepository fileRepository, CatalogImageRep catalogImageRep, CatalogRepository repository) {
         this.fileRepository = fileRepository;
         this.mapstructMapper = mapstructMapper;
+        this.catalogImageRep = catalogImageRep;
+        this.repository = repository;
     }
 
     @PostMapping("/upload")
@@ -50,7 +59,7 @@ public class FilesController {
     }
 
     @PostMapping("/upload/{id}")
-    public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file, @PathVariable int id) {
+    public ResponseEntity<MessageResponse> uploadProductImage(@RequestParam("file") MultipartFile file, @PathVariable int id) {
         String message = "";
         try {
             storageService.save(file);
@@ -63,16 +72,39 @@ public class FilesController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
         }
     }
-
     private void AddToDB(MultipartFile file, int productId){
 //        Product_Images image = new Product_Images();
 //        image.setName(file.getOriginalFilename());
 
         //ImageProductDTO tmp = new ImageProductDTO(file.getOriginalFilename(), productId);
+
         Product_Images image = new Product_Images(file.getOriginalFilename(), productId);
 
         fileRepository.save(image);
+
     }
+
+    @PostMapping("/upload/catalog/{id}")
+    public ResponseEntity<MessageResponse> uploadCatalogImage(@RequestParam("file") MultipartFile file, @PathVariable int id) {
+        String message = "";
+        try {
+            storageService.save(file);
+            Catalog_Images image = new Catalog_Images(file.getOriginalFilename(), id);
+            catalogImageRep.save(image);
+
+            Catalog catalog = repository.findById(id).get();
+            catalog.setImage(image);
+            repository.save(catalog);
+
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
+        }
+    }
+
+
 
     @GetMapping("/files")
     public ResponseEntity<List<FileInfo>> getListFiles() {

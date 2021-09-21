@@ -17,19 +17,27 @@ public class CatalogDTO {
     private String name;
     @JsonProperty("categories")
     private List<CategorySlimDTO> categories;
+    @JsonProperty("image")
+    private ImageCatalogDTO image;
 
-
-    public CatalogDTO(int id, String name) {
+    public CatalogDTO(int id, String name, ImageCatalogDTO image) {
         this.id = id;
         this.name = name;
         this.categories = new ArrayList<>();
-
+        this.image = image;
     }
 
-    public CatalogDTO(int id, String name, List<CategorySlimDTO> categories) {
+    public CatalogDTO(int id, String name, List<CategorySlimDTO> categories, ImageCatalogDTO image) {
         this.id = id;
         this.name = name;
         this.categories = categories;
+        this.image = image;
+    }
+
+    public CatalogDTO(String name){
+        this.name = name;
+        this.categories = new ArrayList<>();
+
     }
 
     public CatalogDTO() {
@@ -38,5 +46,33 @@ public class CatalogDTO {
 
     public String getName() {
         return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<CategorySlimDTO> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CategorySlimDTO> categories) {
+        this.categories = categories;
+    }
+
+    public ImageCatalogDTO getImage() {
+        return image;
+    }
+
+    public void setImage(ImageCatalogDTO image) {
+        this.image = image;
     }
 }

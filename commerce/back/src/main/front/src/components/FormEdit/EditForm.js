@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, InputGroup, FormControl } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { getCatalog, deleteCatalog } from "../../redux/actions/catalogs";
+
+import ImageSelect from "../image-select";
 
 const EditForm = ({ dispatch, item, close }) => {
   const catalog = useSelector((state) => state.catalogReducer);
@@ -23,11 +25,11 @@ const EditForm = ({ dispatch, item, close }) => {
           placeholder="Catalog name"
           aria-describedby="basic-addon2"
           value={catalog.title}
-          onChange={(e) =>
-            setCatalog({
-              title: e.target.value,
-            })
-          }
+          // onChange={(e) =>
+          //   setCatalog({
+          //     title: e.target.value,
+          //   })
+          // }
           type="text"
         />
       </InputGroup>

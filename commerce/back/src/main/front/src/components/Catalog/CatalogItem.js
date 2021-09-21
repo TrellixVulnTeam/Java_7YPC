@@ -13,10 +13,12 @@ import { Link } from "react-router-dom";
 library.add(fas, faGamepad, faEdit, faTrash);
 
 const CatalogItem = (props) => {
-  const { Name, Id } = props;
+  const { Name, Id, Image } = props;
   const [style, setStyle] = useState({
     display: "none",
   });
+
+  const url = "http://localhost:8081/api/public/files/";
 
   const deleteItem = (e, id) => {
     e.preventDefault();
@@ -45,8 +47,9 @@ const CatalogItem = (props) => {
           >
             <Card.Img
               variant="top"
-              src="https://www.pngall.com/wp-content/uploads/4/Headphone-Transparent-PNG.png"
-              style={{ height: "150px", width: "150px" }}
+              // src="https://clipart-best.com/img/spongebob/spongebob-clip-art-50.png"
+              src={url + Image}
+              style={{ height: "150px", width: "200px" }}
             />
             <Card.Body>
               <Card.Title>

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Image, Button } from "react-bootstrap";
 
-const ImageSelect = () => {
+import UploadService from "../services/upload-files-service";
+
+const ImageSelect = ({ addImage, title }) => {
   const [inputs, setInpunts] = useState([]);
   const [files, setFiles] = useState([]);
   const [isHovered, setHover] = useState(false);
@@ -10,18 +12,15 @@ const ImageSelect = () => {
   const appendInput = () => {
     var newInput = `input-${inputs.length}`;
     setInpunts([...inputs, newInput]);
-    // console.log(inputs);
   };
 
   const uploadImage = () => {
-    // console.log("hi");
     appendInput();
     setTimeout(() => {
       if (!hiddenFileInput.current) return;
-      console.log("Отправленное имя: " + hiddenFileInput.current.name);
+      // console.log("Отправленное имя: " + hiddenFileInput.current.name);
       handleClick();
     }, 500);
-    // hiddenFileInput.current.click();
   };
 
   const handleClick = (event) => {
@@ -30,7 +29,12 @@ const ImageSelect = () => {
 
   const handleChange = (event) => {
     const fileUploaded = event.target.files[0];
-    console.log(event.target.files[0]);
+    console.log("upload file" + fileUploaded);
+
+    addImage({
+      image: fileUploaded,
+      title: title,
+    });
 
     var newFile = URL.createObjectURL(event.target.files[0]);
     setFiles([...files, newFile]);
@@ -39,9 +43,9 @@ const ImageSelect = () => {
 
   return (
     <div>
-      <h3>Add image</h3>
+      <h4>Add image</h4>
       <div className="row">
-        <div className="col-md-4" onClick={uploadImage}>
+        <div className="col-md-3" onClick={uploadImage}>
           <img
             src="https://cdn2.iconfinder.com/data/icons/leto-most-searched-mix-5/64/__image_plus_add-512.png"
             width="100%"

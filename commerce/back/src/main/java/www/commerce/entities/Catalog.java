@@ -20,6 +20,11 @@ public class Catalog {
     @JsonIgnore
     private List<Category> categories;
 
+    @OneToOne //(cascade = CascadeType.ALL)
+    @JoinColumn(name = "catalog_images_id", referencedColumnName = "id")
+    private Catalog_Images image;
+
+
     public Catalog() {
         this.categories = new ArrayList<>();
     }
@@ -51,5 +56,13 @@ public class Catalog {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public Catalog_Images getImage() {
+        return image;
+    }
+
+    public void setImage(Catalog_Images image) {
+        this.image = image;
     }
 }

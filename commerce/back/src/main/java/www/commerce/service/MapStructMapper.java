@@ -3,6 +3,7 @@ package www.commerce.service;
 import org.mapstruct.Mapper;
 import www.commerce.dto.catalog.CatalogDTO;
 import www.commerce.dto.catalog.CatalogSlimDTO;
+import www.commerce.dto.catalog.ImageCatalogDTO;
 import www.commerce.dto.category.CategoryDTO;
 import www.commerce.dto.category.CategorySlimDTO;
 import www.commerce.dto.detail.DetailNameDTO;
@@ -31,12 +32,17 @@ public interface MapStructMapper {
     CatalogDTO catalogToCatalogDTO(Catalog catalog);
     Catalog catalogDTOToCatalog(CatalogDTO catalogDTO);
     CatalogSlimDTO catalogToCatalogSlimDTO(Catalog catalog);
-    Catalog catalogSlimDTOToCatalog(CatalogSlimDTO catalogSlimDTO);
+//    Catalog catalogSlimDTOToCatalog(CatalogSlimDTO catalogSlimDTO);
     List<CatalogDTO> catalogsToCatalogDTO(List<Catalog> catalogs);
     List<CatalogSlimDTO> catalogsToCatalogsSlimDTO(List<Catalog> catalogs);
     //images
     ImageProductDTO imageToImageDTO(Product_Images image);
     Product_Images imageDTOToImage(ImageProductDTO image);
+
+//    ImageCatalogDTO imageToCatalogImageDTO(Catalog_Images image);
+//    Catalog_Images imageCatalogDTOToImage(ImageCatalogDTO image);
+
+//    ImageCatalogDTO imageToString(ImageCatalogDTO image);
     //products
     List<ProductDTO> productsToProductDTO(List<Product> products);
     Product productDTOToProduct(ProductDTO productDTO);

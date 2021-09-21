@@ -25,6 +25,20 @@ class CatalogService {
     });
   }
 
+  addCatalog(name, file) {
+    let formData = new FormData();
+    formData.append("file", file);
+    formData.append("name", name);
+
+    console.log(formData);
+
+    return axios.post(API_URL + `catalog`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  }
+
   deleteCatalog(id) {
     return axios.delete(API_URL + `catalogs/${id}`).then((response) => {
       // console.log("delete " + response.data);
