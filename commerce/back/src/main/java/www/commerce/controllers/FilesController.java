@@ -15,9 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import www.commerce.dto.file.FileInfo;
 import www.commerce.entities.Catalog;
-import www.commerce.entities.Catalog_Images;
 import www.commerce.entities.Product_Images;
-import www.commerce.repositories.CatalogImageRep;
 import www.commerce.repositories.CatalogRepository;
 import www.commerce.repositories.FileRepository;
 import www.commerce.dto.auth.response.MessageResponse;
@@ -33,15 +31,13 @@ public class FilesController {
 
     private FileRepository fileRepository;
     private MapStructMapper mapstructMapper;
-    private CatalogImageRep catalogImageRep;
 
     private  CatalogRepository repository;
 
 
-    public FilesController(MapStructMapper mapstructMapper, FileRepository fileRepository, CatalogImageRep catalogImageRep, CatalogRepository repository) {
+    public FilesController(MapStructMapper mapstructMapper, FileRepository fileRepository, CatalogRepository repository) {
         this.fileRepository = fileRepository;
         this.mapstructMapper = mapstructMapper;
-        this.catalogImageRep = catalogImageRep;
         this.repository = repository;
     }
 
@@ -88,13 +84,13 @@ public class FilesController {
     public ResponseEntity<MessageResponse> uploadCatalogImage(@RequestParam("file") MultipartFile file, @PathVariable int id) {
         String message = "";
         try {
-            storageService.save(file);
-            Catalog_Images image = new Catalog_Images(file.getOriginalFilename(), id);
-            catalogImageRep.save(image);
-
-            Catalog catalog = repository.findById(id).get();
-            catalog.setImage(image);
-            repository.save(catalog);
+//            storageService.save(file);
+//            Catalog_Images image = new Catalog_Images(file.getOriginalFilename(), id);
+//            catalogImageRep.save(image);
+//
+//            Catalog catalog = repository.findById(id).get();
+//            catalog.setImage(image);
+//            repository.save(catalog);
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));

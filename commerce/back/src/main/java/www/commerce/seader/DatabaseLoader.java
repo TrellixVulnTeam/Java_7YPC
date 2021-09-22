@@ -35,7 +35,7 @@ public class DatabaseLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if(this.catalogRepository.count()==0){
-            this.catalogRepository.save(new Catalog("Sound and Music"));
+            this.catalogRepository.save(new Catalog("Sound and Music", "headphone.png"));
         }
         if(this.categoryRepository.count()==0){
             this.categoryRepository.save(new Category("Headphones", 1));

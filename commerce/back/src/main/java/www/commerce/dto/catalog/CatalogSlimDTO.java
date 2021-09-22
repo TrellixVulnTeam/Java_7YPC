@@ -10,7 +10,7 @@ public class CatalogSlimDTO {
     private int id;
     @JsonProperty("name")
     private String name;
-
+    @JsonProperty("image")
     private String image;
 
     public CatalogSlimDTO(int id, String name, String image) {
@@ -48,10 +48,7 @@ public class CatalogSlimDTO {
         return image;
     }
 
-    public void setImage(ImageCatalogDTO image) {
-        if(image != null)
-            this.image = image.getName();
-        else
-            this.image = "";
+    public void setImage(String image) {
+        this.image = image;
     }
 }

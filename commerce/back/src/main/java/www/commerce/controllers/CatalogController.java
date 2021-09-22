@@ -1,23 +1,26 @@
 package www.commerce.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import www.commerce.dto.auth.response.MessageResponse;
 import www.commerce.dto.catalog.CatalogDTO;
 import www.commerce.dto.catalog.CatalogSlimDTO;
 import www.commerce.dto.tmpCatalog;
 import www.commerce.entities.Catalog;
-import www.commerce.entities.Catalog_Images;
 import www.commerce.entities.Category;
-import www.commerce.repositories.CatalogImageRep;
 import www.commerce.repositories.CatalogRepository;
 import www.commerce.service.FilesStorageService;
 import www.commerce.service.MapStructMapper;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -29,14 +32,12 @@ public class CatalogController {
 
     @Autowired
     FilesStorageService storageService;
-    private CatalogImageRep catalogImageRep;
 
 
-    CatalogController( MapStructMapper mapstructMapper, CatalogRepository repository,
-                       CatalogImageRep catalogImageRep) {
+    CatalogController( MapStructMapper mapstructMapper, CatalogRepository repository
+                       ) {
         this.repository = repository;
         this.mapstructMapper = mapstructMapper;
-        this.catalogImageRep = catalogImageRep;
     }
 
     @GetMapping("/catalogs")
@@ -88,36 +89,23 @@ public class CatalogController {
 
         String message = "";
         try{
-            CatalogDTO newCatalog = new CatalogDTO(catalog.getName());
-            repository.save(mapstructMapper.catalogDTOToCatalog(newCatalog));
-
-
-            Catalog tmpCatalog = repository.findByName(newCatalog.getName());
-
-            MultipartFile file = catalog.getFile();
-
-            storageService.save(file); // не дозволяє загрузити файли з однаковою назвою
-
-            String fileName = catalog.getFile().getOriginalFilename();
-            int catalogId = tmpCatalog.getId();
-
-            Catalog_Images image = new Catalog_Images(fileName, catalogId);
-            catalogImageRep.save(image);
-
-            tmpCatalog.setImage(image);
+            CatalogDTO newCatalog = new CatalogDTO(catalog.getName(), catalog.getFile().getOriginalFilename());
+            Catalog tmpCatalog = mapstructMapper.catalogDTOToCatalog(newCatalog);
             repository.save(tmpCatalog);
 
-//            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            MultipartFile file = catalog.getFile();
+            storageService.save(file); // не дозволяє загрузити файли з однаковою назвою
 
-            return new ResponseEntity<>(
+//           message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            Catalog d = repository.findById(tmpCatalog.getId()).get();
+            return new ResponseEntity<CatalogSlimDTO>(
                     mapstructMapper.catalogToCatalogSlimDTO(
-                            repository.findByName(newCatalog.getName())
+                            repository.findById(tmpCatalog.getId()).get()
                     ),
                     HttpStatus.OK
             );
         }catch (Exception e) {
             message = "Cannot create catalog";
-//            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
             return new ResponseEntity(message, HttpStatus.BAD_REQUEST);
         }
     }
@@ -157,7 +145,10 @@ public class CatalogController {
     }
 
     @DeleteMapping("/catalogs/{id}")
-    void deleteCatalog(@PathVariable int id) {
+    void deleteCatalog(@PathVariable int id) throws IOException {
+        Catalog deleteCatalog = repository.getById(id);
+        Resource file = storageService.load(deleteCatalog.getImage());
+        Files.delete(Paths.get(file.getFile().getPath()));
+
         repository.deleteById(id);
-    }
-}
+    }}

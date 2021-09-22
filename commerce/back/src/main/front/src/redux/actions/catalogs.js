@@ -31,14 +31,11 @@ export const getCatalogCategory = (id) => async (dispatch) => {
 
 export const addNewCatalog = (name, file) => async (dispatch) => {
   try {
-    // const res = await CatalogService.addNewCatalog(name);
     const res = await CatalogService.addCatalog(name, file);
-
     dispatch({
       type: CREATE_CATALOG,
       payload: res,
     });
-
     // return Promise.resolve(res.data);
   } catch (err) {
     return Promise.reject(err);

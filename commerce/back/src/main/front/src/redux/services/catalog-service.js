@@ -32,11 +32,15 @@ class CatalogService {
 
     console.log(formData);
 
-    return axios.post(API_URL + `catalog`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    return axios
+      .post(API_URL + `catalog`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        return response.data;
+      });
   }
 
   deleteCatalog(id) {

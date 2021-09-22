@@ -3,7 +3,7 @@ import { Image, Button } from "react-bootstrap";
 
 import UploadService from "../services/upload-files-service";
 
-const ImageSelect = ({ addImage, title }) => {
+const ImageSelect = ({ addImage }) => {
   const [inputs, setInpunts] = useState([]);
   const [files, setFiles] = useState([]);
   const [isHovered, setHover] = useState(false);
@@ -33,7 +33,6 @@ const ImageSelect = ({ addImage, title }) => {
 
     addImage({
       image: fileUploaded,
-      title: title,
     });
 
     var newFile = URL.createObjectURL(event.target.files[0]);
