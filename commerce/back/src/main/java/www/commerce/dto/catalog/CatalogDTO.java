@@ -26,6 +26,13 @@ public class CatalogDTO {
         this.image = image;
     }
 
+    public CatalogDTO(int id, String name, String image) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.categories = new ArrayList<>();
+    }
+
     public CatalogDTO(int id, String name, List<CategorySlimDTO> categories, String image) {
         this.id = id;
         this.name = name;

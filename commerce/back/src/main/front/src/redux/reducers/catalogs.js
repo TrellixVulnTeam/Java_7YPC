@@ -48,16 +48,16 @@ const catalogReducer = (state = initialState, action) => {
       };
 
     case UPDATE_CATALOG:
-      return state.map((catalog) => {
-        if (catalog.id === payload.id) {
-          return {
-            ...catalog,
-            ...payload,
-          };
-        } else {
-          return catalog;
-        }
-      });
+      const index = state.catalogs.findIndex(
+        (catalog) => catalog.id === payload.id
+      );
+      const newArray = [...state.catalogs];
+      newArray[index] = payload;
+      return {
+        ...state,
+        loading: false,
+        catalogs: newArray,
+      };
 
     case DELETE_CATALOG:
       return {

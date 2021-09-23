@@ -5,6 +5,7 @@ import {
   CREATE_CATALOG,
   DELETE_CATALOG,
   GET_CATALOG,
+  UPDATE_CATALOG,
 } from "./types";
 import CatalogService from "../services/catalog-service";
 
@@ -57,4 +58,17 @@ export const getCatalog = (id) => async (dispatch) => {
     type: GET_CATALOG,
     payload: res,
   });
+};
+
+export const updateCatalog = (updateCatalog, id) => async (dispatch) => {
+  try {
+    const res = await CatalogService.updateCatalog(updateCatalog, id);
+    dispatch({
+      type: UPDATE_CATALOG,
+      // payload: res,
+      payload: updateCatalog,
+    });
+  } catch (err) {
+    return Promise.reject(err);
+  }
 };

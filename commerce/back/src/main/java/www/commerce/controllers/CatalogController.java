@@ -135,6 +135,8 @@ public class CatalogController {
     @PutMapping("/catalogs/{id}")
     ResponseEntity<Void> updateCatalog(@RequestBody CatalogDTO newCatalog, @PathVariable int id) {
         Catalog catalog = repository.findById(id).get();
+
+
         List<Category> tmp = catalog.getCategories();
         catalog = mapstructMapper.catalogDTOToCatalog(newCatalog);
         if(catalog.getCategories() == null){

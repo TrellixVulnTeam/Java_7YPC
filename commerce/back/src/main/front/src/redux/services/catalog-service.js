@@ -55,6 +55,16 @@ class CatalogService {
       return response.data;
     });
   }
+
+  updateCatalog(updateCatalog, id) {
+    console.log(updateCatalog);
+
+    return axios
+      .put(API_URL + `catalogs/${id}`, updateCatalog)
+      .then((response) => {
+        return response.data;
+      });
+  }
 }
 
 export default new CatalogService();

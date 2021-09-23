@@ -15,6 +15,7 @@ const CatalogList = () => {
   const [isAdd, setIsAdd] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [removeItem, setRemoveItem] = useState();
+  const [editItem, setEditItem] = useState();
 
   const catalog = useSelector((state) => state.catalogReducer);
 
@@ -29,10 +30,22 @@ const CatalogList = () => {
     setModal(false);
     setIsDel(false);
   };
+
+  const closeEdit = () => {
+    setModal(false);
+    setIsEdit(false);
+  };
+
   const removeCatalog = (item) => {
     setIsDel(true);
     setModal(true);
     setRemoveItem(item);
+  };
+
+  const editCatalog = (item) => {
+    setIsEdit(true);
+    setModal(true);
+    setEditItem(item);
   };
 
   useEffect(() => {
@@ -67,6 +80,7 @@ const CatalogList = () => {
                       Name={item.name}
                       Image={item.image}
                       delete={removeCatalog}
+                      edit={editCatalog}
                     />
                   );
                 })
@@ -85,7 +99,9 @@ const CatalogList = () => {
             />
           )}
           {isAdd && <AddForm dispatch={dispatch} create={createCatalog} />}
-          {isEdit && <EditForm />}
+          {isEdit && (
+            <EditForm dispatch={dispatch} item={editItem} close={closeEdit} />
+          )}
         </MyModal>
       </Container>
     </Fragment>

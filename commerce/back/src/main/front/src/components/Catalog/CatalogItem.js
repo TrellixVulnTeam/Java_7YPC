@@ -25,6 +25,11 @@ const CatalogItem = (props) => {
     props.delete(id);
   };
 
+  const editItem = (e, id) => {
+    e.preventDefault();
+    props.edit(id);
+  };
+
   return (
     <Fragment>
       <Col>
@@ -65,6 +70,7 @@ const CatalogItem = (props) => {
                   <Button
                     variant="outline-primary"
                     style={{ marginRight: "2px" }}
+                    onClick={(e) => editItem(e, Id)}
                   >
                     <FontAwesomeIcon icon="edit" />
                   </Button>
